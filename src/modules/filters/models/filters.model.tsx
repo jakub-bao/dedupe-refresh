@@ -16,10 +16,10 @@ export enum FilterType {
 }
 
 export type FiltersModel = {
-    organisationUnit: idName,
-    dataType: idName,
-    period: idName,
-    agency: idName,
-    technicalArea: idName,
+    organisationUnit: string,
+    dataType: string,
+    period: string,
+    agency: string,
+    technicalArea: string,
     dedupeType: DedupeTypeModel
 }

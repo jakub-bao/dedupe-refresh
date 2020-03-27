@@ -1,6 +1,6 @@
 import React from "react";
 import Filters from "../../filters/components/filters.component";
-import {DedupeTypeModel, FiltersModel, idName} from "../../filters/models/filters.model";
+import {FiltersModel, FilterType} from "../../filters/models/filters.model";
 import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
 import Loading from "../../shared/components/loading.component";
 
@@ -27,7 +27,9 @@ export default class Main extends React.Component<{}, {
         });
     }
 
-    onFiltersSelect = (selectedFilters:FiltersModel):void=>{
+    onFiltersSelect = (filterType:FilterType, filterValue:string):void=>{
+        let selectedFilters = {...this.state.selectedFilters};
+        selectedFilters[filterType] = filterValue;
         this.setState({selectedFilters});
     };
 

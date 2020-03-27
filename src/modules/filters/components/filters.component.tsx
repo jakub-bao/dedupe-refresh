@@ -7,14 +7,15 @@ import FilterOptionsProvider from "../services/filterOptionsProvider.service";
 
 function renderSelectFilters(
     selectedFilters: FiltersModel,
-    onFiltersSelect: (FiltersModel)=>void,
+    onFiltersSelect: (filterType:FilterType, filterValue:string)=>void,
     filterOptionsProvider: FilterOptionsProvider
 ) {
     return Object.keys(selectedFilters).map((filterType:string)=>{
         return <SelectFilter
+            key={filterType}
             filterType={filterType as FilterType}
             filterValue={selectedFilters[filterType]}
-            onFilterSelect={onFiltersSelect}
+            onFilterSelect={(filterValue:string)=>onFiltersSelect(filterType as FilterType, filterValue)}
             filterOptions={filterOptionsProvider.getFilterOptions(filterType as FilterType)}
         />
     });
@@ -22,7 +23,7 @@ function renderSelectFilters(
 
 export default function Filters({selectedFilters, onFiltersSelect, filterOptionsProvider}:{
     selectedFilters: FiltersModel,
-    onFiltersSelect: (FiltersModel)=>void,
+    onFiltersSelect: (filterType:FilterType, filterValue:string)=>void,
     filterOptionsProvider: FilterOptionsProvider
 }) {
     return <Drawer
