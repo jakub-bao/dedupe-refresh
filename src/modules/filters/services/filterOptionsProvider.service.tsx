@@ -5,15 +5,9 @@ function transformIdNameList(list:{id:string, displayName}[]):idName[]{
     return list.map(item=>{return{id:item.id, name:item.displayName}});
 }
 
-function extractAgencyName(groupName:string):string{
-    return groupName
-        .replace(/OU .+ Agency /,'')
-        .replace('Global Agency ','')
-        .replace(' users','')
-}
-
 export default class FilterOptionsProvider {
     private orgUnitList: idName[];
+    private dataTypeList: idName[] = [{id: 'TARGETS', name: 'MER Targets'}, {id: 'RESULTS', name: 'MER Results'}];
     private agencyList: idName[];
     private technicalAreaList: idName[];
 
@@ -47,8 +41,9 @@ export default class FilterOptionsProvider {
 
     getFilterOptions(type:FilterType){
         switch(type){
-            case FilterType.agency: return this.agencyList;
             case FilterType.organisationUnit: return this.orgUnitList;
+            case FilterType.dataType: return this.dataTypeList;
+            case FilterType.agency: return this.agencyList;
             //throw new Error('Unknown filter option')
             default: return [];
         }
