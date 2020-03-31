@@ -11,12 +11,15 @@ function renderSelectFilters(
     filterOptionsProvider: FilterOptionsProvider
 ) {
     return Object.keys(selectedFilters).map((filterType:string)=>{
+        let filterOptions;
+        if (filterType!=='period') filterOptions = filterOptionsProvider.getFilterOptions(filterType as FilterType);
+        else filterOptions = filterOptionsProvider.getPeriodOptions(selectedFilters.dataType);
         return <SelectFilter
             key={filterType}
             filterType={filterType as FilterType}
             filterValue={selectedFilters[filterType]}
             onFilterSelect={(filterValue:string)=>onFiltersSelect(filterType as FilterType, filterValue)}
-            filterOptions={filterOptionsProvider.getFilterOptions(filterType as FilterType)}
+            filterOptions={filterOptions}
         />
     });
 }

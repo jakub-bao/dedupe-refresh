@@ -3,6 +3,8 @@ import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
 import {FilterType, idName} from "../models/filters.model";
 import {camelCaseToHuman} from "../../shared/services/camelCase.service";
 
+import "./selectFilter.component.css"
+
 
 export default function SelectFilter({filterType, filterValue, onFilterSelect, filterOptions}:{
     filterType:FilterType,
@@ -17,6 +19,7 @@ export default function SelectFilter({filterType, filterValue, onFilterSelect, f
             id={`cypress_filter_${filterType}`}
             value={filterValue||''}
             onChange={(event:ChangeEvent<any>)=>onFilterSelect(event.target.value)}
+            classes={{selectMenu: 'filters_menu'}}
         >
             {filterOptions.map(option=><MenuItem value={option.id} key={option.id}>{option.name}</MenuItem>)}
         </Select>
