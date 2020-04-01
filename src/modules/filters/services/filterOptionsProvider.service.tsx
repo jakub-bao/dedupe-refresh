@@ -12,6 +12,7 @@ export default class FilterOptionsProvider {
     private periodList: PeriodList;
     private agencyList: idName[];
     private technicalAreaList: idName[];
+    private dedupeTypeList: idName[] = [{id: 'PURE', name: 'Pure Dedupes'}, {id:'CROSSWALK', name: 'Crosswalk Dedupes'}];
 
     init():Promise<any>{
         return Promise.all([
@@ -42,8 +43,16 @@ export default class FilterOptionsProvider {
         });
     }
 
-    private getTechnicalAreas(){
-
+    private getTechnicalAreas():Promise<any>{
+        return getData('/dataElementGroups.json?filter=groupSets.id:eq:LxhLO68FcXm&fields=id,shortName,displayName&paging=false')
+            .then(res=>res.dataElementGroups)
+            .then(degs=>degs.map(de=>{return {
+                id: de.shortName,
+                name: de.displayName
+            }}))
+            .then((technicalAreaList)=> {
+                this.technicalAreaList = technicalAreaList;
+            });
     }
 
     getFilterOptions(type:FilterType){
@@ -51,7 +60,8 @@ export default class FilterOptionsProvider {
             case FilterType.organisationUnit: return this.orgUnitList;
             case FilterType.dataType: return this.dataTypeList;
             case FilterType.agency: return this.agencyList;
-
+            case FilterType.technicalArea: return this.technicalAreaList;
+            case FilterType.dedupeType: return this.dedupeTypeList;
             //throw new Error('Unknown filter option')
             default: return [];
         }

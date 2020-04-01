@@ -3,7 +3,7 @@
 
 # build & output
 /build
-Data-Approval.zip
+Data-Deduplication.zip
 
 # WebStorm ide files
 /cypress/.idea
