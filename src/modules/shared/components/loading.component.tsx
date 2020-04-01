@@ -1,17 +1,21 @@
 import React from 'react';
-import {LinearProgress, Typography} from "@material-ui/core";
+import {CircularProgress, LinearProgress, Typography} from "@material-ui/core";
 import { TextAlignProperty } from 'csstype';
 
 const styles = {
-    message: {
+    root: {
+        marginTop: 100,
         textAlign: 'center' as TextAlignProperty
+    },
+    message: {
+
     }
 };
 
 export default function Loading({message}:{message:string}) {
-    return <React.Fragment>
-        <LinearProgress/>
+    return <div style={styles.root}>
+        <CircularProgress/>
         <br/>
         <Typography className='cy_loading' color="primary" style={styles.message}>{message}</Typography>
-    </React.Fragment>;
+    </div>;
 }

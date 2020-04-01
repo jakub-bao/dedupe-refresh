@@ -34,7 +34,7 @@ export default class Main extends React.Component<{}, {
     };
 
     render() {
-        if (this.state.loadingFilterOptions) return <Loading message={'Loading filters'}/>;
+        if (this.state.loadingFilterOptions) return <Loading message={'Loading...'}/>;
         return <React.Fragment>
             <Filters
                 selectedFilters={this.state.selectedFilters}
