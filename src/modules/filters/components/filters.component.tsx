@@ -1,9 +1,16 @@
 import React from "react";
-import {Drawer} from "@material-ui/core";
+import {Button, Drawer, Typography} from "@material-ui/core";
 import {FiltersModel, FilterType} from "../models/filters.model";
 import SelectFilter from "./selectFilter.component";
 import "./filters.component.css";
 import FilterOptionsProvider from "../services/filterOptionsProvider.service";
+import {FilterList} from "@material-ui/icons";
+
+const styles = {
+    filtersIcon: {
+        verticalAlign: 'sub'
+    }
+};
 
 function renderSelectFilters(
     selectedFilters: FiltersModel,
@@ -35,6 +42,13 @@ export default function Filters({selectedFilters, onFiltersSelect, filterOptions
         open={true}
         classes={{paper:'filters_root'}}
     >
+        <Typography variant='h6'>
+            <FilterList style={styles.filtersIcon}/>
+            Filters
+        </Typography>
         {renderSelectFilters(selectedFilters, onFiltersSelect, filterOptionsProvider)}
+        {/*<Button variant="contained" color="primary">*/}
+        {/*    Search Dedupes*/}
+        {/*</Button>*/}
     </Drawer>;
 }
