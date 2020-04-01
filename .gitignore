@@ -21,12 +21,4 @@ yarn-error.log*
 src/config/testConfig.dev.json
 
 #temp files related to scripts
-cypress/scripts/.idea/
-cypress/scripts/datastore/__pycache__/
-cypress/scripts/datastore/api.pyc
-cypress/scripts/mechanism/__pycache__/
-cypress/scripts/mechanism/api.pyc
-cypress/scripts/users/api.pyc
-cypress/scripts/dataStore/__pycache__/
-cypress/scripts/dataStore/api.pyc
-
+*.pyc
