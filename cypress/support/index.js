@@ -19,8 +19,6 @@ import "./utils/contains"
 import "./utils/visit"
 import "./login/login"
 import "./pages/list"
-import "./api/mechanism"
-import "./api/reset"
 
 // enable stubbing
 Cypress.on('window:before:load', (win) => { win.fetch = null; });

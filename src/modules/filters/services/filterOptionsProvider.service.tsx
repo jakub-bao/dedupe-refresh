@@ -62,8 +62,7 @@ export default class FilterOptionsProvider {
             case FilterType.agency: return this.agencyList;
             case FilterType.technicalArea: return this.technicalAreaList;
             case FilterType.dedupeType: return this.dedupeTypeList;
-            //throw new Error('Unknown filter option')
-            default: return [];
+            throw new Error('Unknown filter option')
         }
     }
 
