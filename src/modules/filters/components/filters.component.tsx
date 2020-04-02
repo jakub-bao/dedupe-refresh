@@ -47,8 +47,5 @@ export default function Filters({selectedFilters, onFiltersSelect, filterOptions
             Filters
         </Typography>
         {renderSelectFilters(selectedFilters, onFiltersSelect, filterOptionsProvider)}
-        {/*<Button variant="contained" color="primary">*/}
-        {/*    Search Dedupes*/}
-        {/*</Button>*/}
     </Drawer>;
 }
