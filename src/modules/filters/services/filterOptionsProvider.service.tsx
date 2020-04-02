@@ -23,11 +23,27 @@ export default class FilterOptionsProvider {
         ]);
     }
 
-    private getOrganisationUnits():Promise<any>{
+    private getAllOrganisationUnits():Promise<any>{
         return getData('/organisationUnits.json?filter=level:eq:3')
-            .then(res=>transformIdNameList(res.organisationUnits))
-            .then((orgUnits)=>{
-                this.orgUnitList = orgUnits;
+            .then(res=>transformIdNameList(res.organisationUnits));
+    }
+
+    private getUserOrganisationUnits():Promise<any>{
+        return getData('/me?fields=organisationUnits[id,name]')
+            .then(res=>res.organisationUnits);
+    }
+
+    private getOrganisationUnits():Promise<any>{
+        return Promise.all([
+            this.getUserOrganisationUnits(),
+            this.getAllOrganisationUnits(),
+        ]).then(response=>{
+            let userOus = response[0];
+            let allOus = response[1];
+            let isGlobal = userOus.map(ou=>ou.name).includes('Global');
+            console.log(response, userOus.map(ou=>ou.name), isGlobal);
+            if (isGlobal) return this.orgUnitList = allOus;
+            else return this.orgUnitList = userOus;
         });
     }
 
