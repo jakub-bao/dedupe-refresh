@@ -9,6 +9,7 @@ def fetch_users():
         'fields': '*',
         'filter': [
             'userCredentials.username:$like:cypress-de-',
+            'userCredentials.username:$like:cypress-superAdmin',
         ],
         'rootJunction':'OR'
     }

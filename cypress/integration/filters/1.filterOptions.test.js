@@ -24,4 +24,14 @@ describe('Filters > Filter Options', ()=>{
 
     Object.keys(filterOptions).map(filterType=>generateFilterOptionsTest(filterType, filterOptions[filterType]));
 
+    it(`Should have all Org Units for super user`, ()=>{
+        cy.loginAs('de-interAgency-rwanda');
+        cy.goHome();
+        
+        cy.get(`#cypress_filter_${filterType}`).click();
+        cy.containsAll(options.contains);
+        if (options.notContains) cy.containsNotAll(options.notContains);
+        cy.get('.MuiMenuItem-root:nth-child(1)').click();
+    });
+
 });
