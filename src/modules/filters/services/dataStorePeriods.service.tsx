@@ -1,4 +1,4 @@
-import {idName} from "../models/filters.model";
+import {DataTypePeriodList, idName} from "../models/filters.model";
 import {getData} from "../../shared/services/dataApi.service";
 
 function generatePeriodName(periodKey:string):string{
@@ -29,18 +29,13 @@ function transformPeriod(periodResponse:any):idName[] {
         });
 }
 
-function transformFromDatastore(response:any):PeriodList {
+function transformFromDatastore(response:any):DataTypePeriodList {
     return {
         targets: transformPeriod(response.TARGETS),
         results: transformPeriod(response.RESULTS)
     };
 }
 
-export type PeriodList = {
-    results: idName[];
-    targets: idName[]
-}
-
-export function getPeriodsFromDatastore():Promise<PeriodList>{
+export function getPeriodsFromDatastore():Promise<DataTypePeriodList>{
     return getData('/dataStore/dedupe/periodSettings').then(transformFromDatastore)
 }

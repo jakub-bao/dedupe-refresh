@@ -23,3 +23,8 @@ export type FiltersModel = {
     technicalArea: string,
     dedupeType: DedupeTypeModel
 }
+
+export type DataTypePeriodList = {
+    results: idName[];
+    targets: idName[]
+}

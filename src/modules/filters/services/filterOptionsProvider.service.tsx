@@ -1,6 +1,6 @@
-import {FilterType, idName} from "../models/filters.model";
+import {DataTypePeriodList, FilterType, idName} from "../models/filters.model";
 import {getData} from "../../shared/services/dataApi.service";
-import {getPeriodsFromDatastore, PeriodList} from "./dataStorePeriods.service";
+import {getPeriodsFromDatastore} from "./dataStorePeriods.service";
 
 function transformIdNameList(list:{id:string, displayName}[]):idName[]{
     return list.map(item=>{return{id:item.id, name:item.displayName}});
@@ -9,7 +9,7 @@ function transformIdNameList(list:{id:string, displayName}[]):idName[]{
 export default class FilterOptionsProvider {
     private orgUnitList: idName[];
     private dataTypeList: idName[] = [{id: 'TARGETS', name: 'MER Targets'}, {id: 'RESULTS', name: 'MER Results'}];
-    private periodList: PeriodList;
+    private periodList: DataTypePeriodList;
     private agencyList: idName[];
     private technicalAreaList: idName[];
     private dedupeTypeList: idName[] = [{id: 'PURE', name: 'Pure Dedupes'}, {id:'CROSSWALK', name: 'Crosswalk Dedupes'}];
@@ -41,7 +41,6 @@ export default class FilterOptionsProvider {
             let userOus = response[0];
             let allOus = response[1];
             let isGlobal = userOus.map(ou=>ou.name).includes('Global');
-            console.log(response, userOus.map(ou=>ou.name), isGlobal);
             if (isGlobal) return this.orgUnitList = allOus;
             else return this.orgUnitList = userOus;
         });
@@ -86,5 +85,10 @@ export default class FilterOptionsProvider {
         if (!dataType) return [];
         return this.periodList[dataType.toLocaleLowerCase()];
     }
+
+    getAllPeriods():DataTypePeriodList{
+        return this.periodList;
+    }
 }
+
 

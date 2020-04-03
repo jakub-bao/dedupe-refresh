@@ -1,5 +1,5 @@
 import React from 'react';
-import {CircularProgress, LinearProgress, Typography} from "@material-ui/core";
+import {CircularProgress, Typography} from "@material-ui/core";
 import { TextAlignProperty } from 'csstype';
 
 const styles = {

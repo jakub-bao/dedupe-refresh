@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Drawer, Typography} from "@material-ui/core";
+import {Drawer, Typography} from "@material-ui/core";
 import {FiltersModel, FilterType} from "../models/filters.model";
 import SelectFilter from "./selectFilter.component";
 import "./filters.component.css";
