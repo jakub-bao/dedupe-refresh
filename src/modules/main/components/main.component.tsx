@@ -59,7 +59,7 @@ export default class Main extends React.Component<{}, {
                 onFiltersSelect={this.onFiltersSelect}
                 filterOptionsProvider={this.filterOptionsProvider}
             />
-            <div style={{marginLeft: 300}}>{JSON.stringify(this.state.results.dedupes)}</div>
+            <div id="cypress_results" style={{marginLeft: 300}}>{JSON.stringify(this.state.results.dedupes)}</div>
         </React.Fragment>;
     }
 }
