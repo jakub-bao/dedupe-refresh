@@ -1,5 +1,6 @@
 import {getData} from "../../shared/services/dataApi.service";
 import {DataTypePeriodList} from "../../shared/models/shared.models";
+import {DedupeModel} from "../models/dedupe.model";
 
 function generateDedupeUrl(orgUnitId:string, dataType: string, periodId:string, dedupeType:string):string{
     return `/sqlViews/wzpSd6j89wc/data?paging=false`
@@ -16,6 +17,8 @@ function generateDedupeUrl(orgUnitId:string, dataType: string, periodId:string, 
 
 export default class DedupeDataProvider {
     private orgUnitId:string;
+    private dedupeDatabase: DedupeModel[];
+
     changeOrgUnit(orgUnitId:string, dataTypePeriods: DataTypePeriodList):Promise<any>{
         if (this.orgUnitId===orgUnitId) return Promise.resolve();
         return this.fetchDedupesByOrgUnit(orgUnitId, dataTypePeriods);
