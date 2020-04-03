@@ -1,23 +1,19 @@
 
 export type DedupeMetaModel = {
-    orgUnitId: string;          // #8
+    orgUnitId: string;
     periodId: string;
     dataType: string;
 }
 
 export type DedupeDataModel = {
-    // value: number;              // #6
-    dataElementId: string;      // #9
-    disAggregation: string;     // #2
-    // mechanismNumber: number;    // #4
-    categoryOptionComboId: string;   // #10
+    dataElementId: string;
+    disAggregation: string;
+    categoryOptionComboId: string;
 }
 
 export type DedupeInfoModel = {
-    orgUnitName: string;        // #0
-    dataElementName: string;    // #1
-    // agencyName: string;         // #3
-    // partnerName: string;        // #5
+    orgUnitName: string;
+    dataElementName: string;
 }
 
 export type DedupeStatusModel = {
@@ -25,13 +21,13 @@ export type DedupeStatusModel = {
 }
 
 export type DuplicateInfoModel = {
-    agencyName: string;         // #3
-    partnerName: string;        // #5
-    mechanismNumber: number;    // #4
+    agencyName: string;
+    partnerName: string;
+    mechanismNumber: number;
 }
 
 export type DuplicateModel = {
-    value: number;              // #6
+    value: number;
     info: DuplicateInfoModel;
 }
 
