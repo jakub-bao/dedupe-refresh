@@ -1,11 +1,8 @@
 import {getData} from "../../shared/services/dataApi.service";
 import {DataTypePeriodList} from "../../shared/models/shared.models";
 import {
-    DedupeDataModel,
-    DedupeInfoModel,
-    DedupeMetaModel,
     DedupeModel,
-    DedupeStatusModel, DuplicateModel
+    DuplicateModel
 } from "../models/dedupe.model";
 
 function generateDedupeUrl(orgUnitId:string, dataType: string, periodId:string, dedupeType:string):string{
@@ -19,6 +16,19 @@ function generateDedupeUrl(orgUnitId:string, dataType: string, periodId:string, 
         + `&var=pg:1`
         + `&var=ag:NONE`
         + `&var=dg:NONE`;
+}
+
+function extractDuplicates(rows:namedRow[]):DuplicateModel[]{
+    return rows.map(namedRow=>{
+        return {
+            value: namedRow.value,
+            info: {
+                agencyName: namedRow.agencyName,
+                partnerName: namedRow.partnerName,
+                mechanismNumber: namedRow.mechanismNumber
+            }
+        }
+    })
 }
 
 function generateDedupe(selectedRows: namedRow[]):DedupeModel{
@@ -41,7 +51,7 @@ function generateDedupe(selectedRows: namedRow[]):DedupeModel{
         status: {
             resolved: first.duplicateStatus==='RESOLVED'
         },
-        duplicates: []
+        duplicates: extractDuplicates(selectedRows)
     };
     return dedupe;
 }
