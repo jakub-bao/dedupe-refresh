@@ -1,6 +1,7 @@
-import {DataTypePeriodList, FilterType, idName} from "../models/filters.model";
+import {FilterType} from "../models/filters.model";
 import {getData} from "../../shared/services/dataApi.service";
 import {getPeriodsFromDatastore} from "./dataStorePeriods.service";
+import {DataTypePeriodList, idName} from "../../shared/models/shared.models";
 
 function transformIdNameList(list:{id:string, displayName}[]):idName[]{
     return list.map(item=>{return{id:item.id, name:item.displayName}});

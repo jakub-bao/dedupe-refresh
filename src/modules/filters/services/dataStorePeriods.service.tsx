@@ -1,5 +1,5 @@
-import {DataTypePeriodList, idName} from "../models/filters.model";
 import {getData} from "../../shared/services/dataApi.service";
+import {DataTypePeriodList, idName} from "../../shared/models/shared.models";
 
 function generatePeriodName(periodKey:string):string{
     let year:number = parseInt(periodKey.substr(0,4));

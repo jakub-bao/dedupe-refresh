@@ -1,13 +1,13 @@
-import {DataTypePeriodList} from "../models/filters.model";
 import {getData} from "../../shared/services/dataApi.service";
+import {DataTypePeriodList} from "../../shared/models/shared.models";
 
-function generateDedupeUrl(orgUnitId:string, dataType: string, periodId:string, dedupeType:string, resolved: boolean):string{
+function generateDedupeUrl(orgUnitId:string, dataType: string, periodId:string, dedupeType:string):string{
     return `/sqlViews/wzpSd6j89wc/data?paging=false`
         + `&var=ou:${orgUnitId}`
         + `&var=dt:${dataType}`
         + `&var=pe:${periodId}`
         + `&var=ty:${dedupeType}`
-        + `&var=rs:${resolved}`
+        + `&var=rs:true`
         + `&var=ps:100000`
         + `&var=pg:1`
         + `&var=ag:NONE`
@@ -26,9 +26,7 @@ export default class DedupeDataProvider {
         ['results', 'targets'].forEach(dataType=>{
             dataTypePeriods[dataType].forEach(period=>{
                 ['PURE','CROSSWALK'].forEach(dedupeType=>{
-                    [true, false].forEach(resolved=>{
-                        queries.push(generateDedupeUrl(orgUnitId, dataType.toLocaleUpperCase(), period.id, dedupeType, resolved));
-                    });
+                    queries.push(generateDedupeUrl(orgUnitId, dataType.toLocaleUpperCase(), period.id, dedupeType));
                 });
             });
         });

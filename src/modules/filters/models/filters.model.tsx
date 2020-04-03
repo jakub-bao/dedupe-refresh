@@ -1,5 +1,3 @@
-export type idName = {id:string, name:string}
-
 export enum DedupeTypeModel {
     pure = 'pure',
     pureAndResolved = 'pureAndResolved',
@@ -22,9 +20,4 @@ export type FiltersModel = {
     agency: string,
     technicalArea: string,
     dedupeType: DedupeTypeModel
-}
-
-export type DataTypePeriodList = {
-    results: idName[];
-    targets: idName[]
 }

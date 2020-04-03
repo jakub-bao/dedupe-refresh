@@ -3,7 +3,7 @@ import Filters from "../../filters/components/filters.component";
 import {FiltersModel, FilterType} from "../../filters/models/filters.model";
 import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
 import Loading from "../../shared/components/loading.component";
-import DedupeDataProvider from "../../filters/services/dedupeDataProvider.service";
+import DedupeDataProvider from "../../results/services/dedupeDataProvider.service";
 
 export default class Main extends React.Component<{}, {
     selectedFilters:FiltersModel,

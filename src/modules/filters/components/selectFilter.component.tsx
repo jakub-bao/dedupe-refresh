@@ -1,8 +1,8 @@
 import React, {ChangeEvent} from "react";
 import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
-import {FilterType, idName} from "../models/filters.model";
+import {FilterType} from "../models/filters.model";
 import {camelCaseToHuman} from "../../shared/services/camelCase.service";
-
+import {idName} from "../../shared/models/shared.models";
 import "./selectFilter.component.css"
 
 
