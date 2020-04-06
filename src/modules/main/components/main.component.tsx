@@ -5,6 +5,13 @@ import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.
 import Loading from "../../shared/components/loading.component";
 import {DedupeModel} from "../../results/models/dedupe.model";
 import fetchDedupes from "../../results/services/dedupeDataProvider.service";
+import Results from "../../results/components/results.component";
+
+const styles = {
+    results: {
+        marginLeft: 200
+    }
+};
 
 export default class Main extends React.Component<{}, {
     selectedFilters:FiltersModel,
@@ -58,7 +65,9 @@ export default class Main extends React.Component<{}, {
                 filterOptionsProvider={this.filterOptionsProvider}
                 onSearchClick={this.onSearchClick}
             />
-            <div id="cypress_results" style={{marginLeft: 300}}>{JSON.stringify(this.state.results.dedupes)}</div>
+            <div style={styles.results}>
+                <Results filteredDedupes={this.state.results.dedupes}/>
+            </div>
         </React.Fragment>;
     }
 }

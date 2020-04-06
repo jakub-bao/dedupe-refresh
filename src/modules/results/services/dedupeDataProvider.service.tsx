@@ -1,5 +1,4 @@
 import {getData} from "../../shared/services/dataApi.service";
-import {DataTypePeriodList} from "../../shared/models/shared.models";
 import {
     DedupeModel,
     DuplicateModel
