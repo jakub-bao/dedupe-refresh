@@ -22,11 +22,9 @@ function extractDuplicates(rows:namedRow[]):DuplicateModel[]{
     return rows.map(namedRow=>{
         return {
             value: namedRow.value,
-            info: {
-                agencyName: namedRow.agencyName,
-                partnerName: namedRow.partnerName,
-                mechanismNumber: namedRow.mechanismNumber
-            }
+            agencyName: namedRow.agencyName,
+            partnerName: namedRow.partnerName,
+            mechanismNumber: namedRow.mechanismNumber
         }
     })
 }

@@ -1,5 +1,5 @@
-Cypress.Commands.add('loadDone', ()=>{
-    cy.get('.cy_loading').should('not.exist', {timeout: 15000});
+Cypress.Commands.add('loadingDone', ()=>{
+    cy.get('.cypress_loading').should('not.exist', {timeout: 15000});
 });
 
 Cypress.Commands.overwrite('select', (x, subject, value)=>{
@@ -12,5 +12,6 @@ Cypress.Commands.add('setFilter', (filterType, filterValue)=>{
 });
 
 Cypress.Commands.add('searchDedupes', ()=>{
+    cy.loadingDone();
     cy.get(`#cypress_searchDedupes`).click();
 });

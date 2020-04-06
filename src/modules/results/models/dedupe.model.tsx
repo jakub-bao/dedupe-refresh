@@ -20,15 +20,11 @@ export type DedupeStatusModel = {
     resolved: boolean;
 }
 
-export type DuplicateInfoModel = {
+export type DuplicateModel = {
+    value: number;
     agencyName: string;
     partnerName: string;
     mechanismNumber: number;
-}
-
-export type DuplicateModel = {
-    value: number;
-    info: DuplicateInfoModel;
 }
 
 export type DedupeModel = {

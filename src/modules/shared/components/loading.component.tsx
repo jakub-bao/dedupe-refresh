@@ -16,6 +16,6 @@ export default function Loading({message}:{message:string}) {
     return <div style={styles.root}>
         <CircularProgress/>
         <br/>
-        <Typography className='cy_loading' color="primary" style={styles.message}>{message}</Typography>
+        <Typography className='cypress_loading' color="primary" style={styles.message}>{message}</Typography>
     </div>;
 }

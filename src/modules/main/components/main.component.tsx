@@ -20,7 +20,8 @@ export default class Main extends React.Component<{}, {
     results: {
         dedupes: DedupeModel[]
     }
-    loadingFilterOptions: boolean
+    loadingFilterOptions: boolean,
+    loadingDedupes: boolean
 }> {
     filterOptionsProvider:FilterOptionsProvider = new FilterOptionsProvider();
     constructor(props) {
@@ -38,7 +39,8 @@ export default class Main extends React.Component<{}, {
             results: {
                 dedupes: null
             },
-            loadingFilterOptions: true
+            loadingFilterOptions: true,
+            loadingDedupes: false
         };
         this.filterOptionsProvider.init().then(()=>{
             this.setState({loadingFilterOptions:false});
@@ -46,8 +48,9 @@ export default class Main extends React.Component<{}, {
     }
 
     onSearchClick = ()=>{
+        this.setState({loadingDedupes: true});
         fetchDedupes(this.state.selectedFilters).then(dedupes=>{
-            this.setState({results: {dedupes}});
+            this.setState({results: {dedupes}, loadingDedupes: false});
         });
     };
 
@@ -56,6 +59,24 @@ export default class Main extends React.Component<{}, {
         let selectedFilters = {...this.state.selectedFilters};
         selectedFilters[filterType] = filterValue;
         this.setState({selectedFilters});
+    };
+
+    renderResults(){
+        if (this.state.loadingDedupes) return <Loading message={'Searching duplicates...'}/>;
+        return <Results filteredDedupes={this.state.results.dedupes}/>;
+    }
+
+    renderPreselect(){
+        if (!this.state.selectedFilters.organisationUnit) return <div onClick={this.preselect}>preselect</div>
+    }
+
+    preselect = ()=>{
+        let selectedFilters = {...this.state.selectedFilters}
+        selectedFilters.organisationUnit = 'XtxUYCsDWrR';
+        selectedFilters.dataType = 'RESULTS';
+        selectedFilters.period = '2020Q2';
+        this.setState({selectedFilters});
+        setTimeout(this.onSearchClick, 0);
     };
 
     render() {
@@ -68,7 +89,8 @@ export default class Main extends React.Component<{}, {
                 onSearchClick={this.onSearchClick}
             />
             <div style={styles.results}>
-                <Results filteredDedupes={this.state.results.dedupes}/>
+                {this.renderPreselect()}
+                {this.renderResults()}
             </div>
         </React.Fragment>;
     }
