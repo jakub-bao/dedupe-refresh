@@ -53,7 +53,7 @@ export default function Filters({selectedFilters, onFiltersSelect, filterOptions
         </Typography>
         {renderSelectFilters(selectedFilters, onFiltersSelect, filterOptionsProvider)}
         <br/>
-        <Button variant="contained" color="secondary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)}>
+        <Button variant="contained" color="secondary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)} id='cypress_searchDedupes'>
             Search Dedupes
         </Button>
     </Drawer>;

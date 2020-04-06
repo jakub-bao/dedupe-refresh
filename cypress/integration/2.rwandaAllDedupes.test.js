@@ -5,7 +5,10 @@ describe('Rwanda All Dedupes', ()=> {
     });
     
     it('Should be able to view Rwanda dedupes', ()=>{
-        cy.get(`#cypress_filter_organisationUnit`).select('XtxUYCsDWrR');
+        cy.setFilter('organisationUnit', 'XtxUYCsDWrR');
+        cy.setFilter('dataType', 'RESULTS');
+        cy.setFilter('period', '2020Q2');
+        cy.searchDedupes();
         cy.get('#cypress_results').containsAll([
             'HTS_TST (N, DSD, KeyPop/Result): HTS received results',
             'PWID, Negative',
