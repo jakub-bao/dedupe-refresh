@@ -8,6 +8,7 @@ const columnSettings = [
 
 export default function ResultsTable({filteredDedupes}:{filteredDedupes: DedupeModel[]}) {
     return <MaterialTable
+        title="Data Deduplication"
         columns={columnSettings}
         data={filteredDedupes}/>;
 }

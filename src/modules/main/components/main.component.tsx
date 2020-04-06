@@ -9,7 +9,9 @@ import Results from "../../results/components/results.component";
 
 const styles = {
     results: {
-        marginLeft: 200
+        marginTop: 10,
+        marginLeft: 235,
+        marginRight: 15
     }
 };
 

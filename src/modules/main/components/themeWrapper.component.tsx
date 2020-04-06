@@ -15,20 +15,19 @@ const theme = createMuiTheme({
         error:{
             main: '#D72638'
         }
+
     },
 });
 
 const styles = {
-    wrapper: {
-        maxWidth: 960,
-        margin: 'auto'
+    root: {
     }
 };
 
 export default function ThemeWrapper({children}:{children:ReactNode}) {
     return (
         <ThemeProvider theme={theme}>
-            <div style={styles.wrapper}>
+            <div style={styles.root}>
                 {children}
             </div>
         </ThemeProvider>
