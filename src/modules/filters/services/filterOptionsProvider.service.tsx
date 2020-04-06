@@ -14,6 +14,7 @@ export default class FilterOptionsProvider {
     private agencyList: idName[];
     private technicalAreaList: idName[];
     private dedupeTypeList: idName[] = [{id: 'PURE', name: 'Pure Dedupes'}, {id:'CROSSWALK', name: 'Crosswalk Dedupes'}];
+    private includeResolvedList: idName[] = [{id: 'true', name: 'Yes'}, {id:'false', name: 'No'}];
 
     init():Promise<any>{
         return Promise.all([
@@ -78,6 +79,7 @@ export default class FilterOptionsProvider {
             case FilterType.agency: return this.agencyList;
             case FilterType.technicalArea: return this.technicalAreaList;
             case FilterType.dedupeType: return this.dedupeTypeList;
+            case FilterType.includeResolved: return this.includeResolvedList;
             throw new Error('Unknown filter option')
         }
     }

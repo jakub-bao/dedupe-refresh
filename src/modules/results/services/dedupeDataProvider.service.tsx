@@ -4,18 +4,19 @@ import {
     DedupeModel,
     DuplicateModel
 } from "../models/dedupe.model";
+import {FiltersModel} from "../../filters/models/filters.model";
 
-function generateDedupeUrl(orgUnitId:string, dataType: string, periodId:string, dedupeType:string):string{
+function generateDedupeUrl(selectedFilters:FiltersModel):string{
     return `/sqlViews/wzpSd6j89wc/data?paging=false`
-        + `&var=ou:${orgUnitId}`
-        + `&var=dt:${dataType}`
-        + `&var=pe:${periodId}`
-        + `&var=ty:${dedupeType}`
-        + `&var=rs:true`
+        + `&var=ou:${selectedFilters.organisationUnit}`
+        + `&var=dt:${selectedFilters.dataType}`
+        + `&var=pe:${selectedFilters.period}`
+        + `&var=ty:${selectedFilters.dedupeType||'PURE'}`
+        + `&var=rs:${selectedFilters.includeResolved||false}`
         + `&var=ps:100000`
         + `&var=pg:1`
-        + `&var=ag:NONE`
-        + `&var=dg:NONE`;
+        + `&var=ag:${selectedFilters.agency||'NONE'}`
+        + `&var=dg:${selectedFilters.technicalArea||'NONE'}`;
 }
 
 function extractDuplicates(rows:namedRow[]):DuplicateModel[]{
@@ -105,33 +106,10 @@ function nameRows(rows:any[]):namedRow[]{
     });
 }
 
-export default class DedupeDataProvider {
-    private orgUnitId:string;
-    private dedupeDatabase: DedupeModel[] = [];
+export default function fetchDedupes(selectedFilters:FiltersModel):Promise<DedupeModel[]>{
+    let requestUrl = generateDedupeUrl(selectedFilters);
 
-    changeOrgUnit(orgUnitId:string, dataTypePeriods: DataTypePeriodList):Promise<any>{
-        if (this.orgUnitId===orgUnitId) return Promise.resolve();
-        return this.fetchDedupesByOrgUnit(orgUnitId, dataTypePeriods);
-    }
-
-    fetchDedupesByOrgUnit(orgUnitId:string, dataTypePeriods: DataTypePeriodList):Promise<any>{
-        let queries = [];
-        ['results', 'targets'].forEach(dataType=>{
-            dataTypePeriods[dataType].forEach(period=>{
-                ['PURE','CROSSWALK'].forEach(dedupeType=>{
-                    queries.push(generateDedupeUrl(orgUnitId, dataType.toLocaleUpperCase(), period.id, dedupeType));
-                });
-            });
-        });
-        let promises = queries.map(query=>getData(query));
-        return Promise.all(promises)
-            .then(responses=>responses.map(response=>nameRows(response.listGrid.rows)))
-            .then(responses=>responses.map(processResponse))
-            // .then(test=>{console.log(test); return test;})
-            .then(dedupes=>{this.dedupeDatabase =this.dedupeDatabase.concat(...dedupes)});
-    }
-    getAllDedupes():DedupeModel[]{
-        return this.dedupeDatabase;
-    }
+    return getData(requestUrl)
+        .then(response=>nameRows(response.listGrid.rows))
+        .then(processResponse);
 }
-

@@ -1,16 +1,11 @@
-export enum DedupeTypeModel {
-    pure = 'pure',
-    pureAndResolved = 'pureAndResolved',
-    crosswalk = 'crosswalk'
-}
-
 export enum FilterType {
     organisationUnit = 'organisationUnit',
     dataType='dataType',
     period='period',
     agency='agency',
     technicalArea='technicalArea',
-    dedupeType='dedupeType'
+    dedupeType='dedupeType',
+    includeResolved='includeResolved'
 }
 
 export type FiltersModel = {
@@ -19,5 +14,6 @@ export type FiltersModel = {
     period: string,
     agency: string,
     technicalArea: string,
-    dedupeType: DedupeTypeModel
+    dedupeType: string,
+    includeResolved: boolean
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import {Drawer, Typography} from "@material-ui/core";
+import {Button, Drawer, Typography} from "@material-ui/core";
 import {FiltersModel, FilterType} from "../models/filters.model";
 import SelectFilter from "./selectFilter.component";
 import "./filters.component.css";
@@ -31,10 +31,15 @@ function renderSelectFilters(
     });
 }
 
-export default function Filters({selectedFilters, onFiltersSelect, filterOptionsProvider}:{
+function searchEnabled(selectedFilters:FiltersModel):boolean{
+    return !!selectedFilters.organisationUnit && !!selectedFilters.dataType && !!selectedFilters.period;
+}
+
+export default function Filters({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick}:{
     selectedFilters: FiltersModel,
     onFiltersSelect: (filterType:FilterType, filterValue:string)=>void,
-    filterOptionsProvider: FilterOptionsProvider
+    filterOptionsProvider: FilterOptionsProvider,
+    onSearchClick: ()=>void
 }) {
     return <Drawer
         anchor='left'
@@ -47,5 +52,9 @@ export default function Filters({selectedFilters, onFiltersSelect, filterOptions
             Filters
         </Typography>
         {renderSelectFilters(selectedFilters, onFiltersSelect, filterOptionsProvider)}
+        <br/>
+        <Button variant="contained" color="secondary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)}>
+            Search Dedupes
+        </Button>
     </Drawer>;
 }
