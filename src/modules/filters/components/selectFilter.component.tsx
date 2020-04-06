@@ -6,6 +6,12 @@ import {idName} from "../../shared/models/shared.models";
 import "./selectFilter.component.css"
 
 
+function generateLabel(filterType:string){
+    let required = '';
+    if ([FilterType.organisationUnit, FilterType.dataType, FilterType.period].includes(filterType as FilterType)) required = ' *';
+    return camelCaseToHuman(filterType) + required;
+}
+
 export default function SelectFilter({filterType, filterValue, onFilterSelect, filterOptions}:{
     filterType:FilterType,
     filterValue:string,
@@ -13,7 +19,7 @@ export default function SelectFilter({filterType, filterValue, onFilterSelect, f
     filterOptions: idName[]
 }) {
     return <FormControl>
-        <InputLabel id={`selectFilter_${filterType}`}>{camelCaseToHuman(filterType)}</InputLabel>
+        <InputLabel id={`selectFilter_${filterType}`}>{generateLabel(filterType)}</InputLabel>
         <Select
             labelId={`selectFilter_${filterType}`}
             id={`cypress_filter_${filterType}`}
