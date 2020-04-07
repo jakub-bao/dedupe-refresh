@@ -12,7 +12,10 @@ const tableOptions = {
     emptyRowsWhenPaging: false,
     thirdSortClick: false,
     padding: 'dense' as ('default' | 'dense'),
-    headerStyle: {padding}
+    headerStyle: {padding},
+    toolbar: false,
+    // search: false,
+    // showTitle: false
 };
 
 const borderRight = '1px solid #00000021';
@@ -28,6 +31,10 @@ const columnSettings = [
     {title: 'Value', render: iterateValuesFactory('value'), ...noSort, cellStyle: {padding, borderRight}}
 ];
 
+const customComponents = {
+    Container: props=><div {...props}></div>
+};
+
 
 function iterateValuesFactory(property:string){
     return function(dedupe:DedupeModel){
@@ -42,5 +49,7 @@ export default function ResultsTable({filteredDedupes}:{filteredDedupes: DedupeM
         title="Data Deduplication"
         options={tableOptions}
         columns={columnSettings}
-        data={filteredDedupes}/>;
+        data={filteredDedupes}
+        components={customComponents}
+    />;
 }

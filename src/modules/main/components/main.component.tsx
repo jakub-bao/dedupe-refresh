@@ -75,7 +75,7 @@ export default class Main extends React.Component<{}, {
     }
 
     renderPreselect(){
-        if (!this.state.selectedFilters.organisationUnit) return <div onClick={this.preselect}>preselect</div>
+        if (!this.state.selectedFilters.organisationUnit) return <div onClick={this.preselect} style={{marginLeft: 200}}>preselect</div>
     }
 
     preselect = ()=>{
@@ -103,7 +103,7 @@ export default class Main extends React.Component<{}, {
                 onSearchClick={this.onSearchClick}
                 filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}
             />
-                {/*{this.renderPreselect()}*/}
+            {this.renderPreselect()}
             {this.renderResults()}
         </React.Fragment>;
     }
