@@ -1,5 +1,5 @@
 export type FiltersUiModel = {
     filtersOpen: boolean,
-    openFilters?: ()=>void,
-    closeFilters?: ()=>void
+    openFilters: ()=>void,
+    closeFilters: ()=>void
 };

@@ -6,14 +6,7 @@ import Loading from "../../shared/components/loading.component";
 import {DedupeModel} from "../../results/models/dedupe.model";
 import fetchDedupes from "../../results/services/dedupeDataProvider.service";
 import Results from "../../results/components/results.component";
-
-const styles = {
-    results: {
-        marginTop: 10,
-        marginLeft: 235,
-        marginRight: 15
-    }
-};
+import {FiltersUiModel} from "../../filters/components/filtersUi.model";
 
 export default class Main extends React.Component<{}, {
     selectedFilters:FiltersModel,
@@ -27,6 +20,7 @@ export default class Main extends React.Component<{}, {
     }
 }> {
     filterOptionsProvider:FilterOptionsProvider = new FilterOptionsProvider();
+    filtersUi:FiltersUiModel;
     constructor(props) {
         super(props);
         this.state = {
@@ -51,6 +45,11 @@ export default class Main extends React.Component<{}, {
         this.filterOptionsProvider.init().then(()=>{
             this.setState({loadingFilterOptions:false});
         });
+        this.filtersUi = {
+            filtersOpen: null,
+            closeFilters: ()=>this.uiSetFiltersOpen(false),
+            openFilters: ()=>this.uiSetFiltersOpen(true)
+        };
     }
 
     onSearchClick = ()=>{
@@ -69,7 +68,10 @@ export default class Main extends React.Component<{}, {
 
     renderResults(){
         if (this.state.loadingDedupes) return <Loading message={'Searching duplicates...'}/>;
-        return <Results filteredDedupes={this.state.results.dedupes}/>;
+        return <Results
+            filteredDedupes={this.state.results.dedupes}
+            filtersUi={this.filtersUi}
+        />;
     }
 
     renderPreselect(){
@@ -99,12 +101,10 @@ export default class Main extends React.Component<{}, {
                 onFiltersSelect={this.onFiltersSelect}
                 filterOptionsProvider={this.filterOptionsProvider}
                 onSearchClick={this.onSearchClick}
-                filtersUi={{filtersOpen:this.state.ui.filtersOpen, closeFilters: ()=>this.uiSetFiltersOpen(false)}}
+                filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}
             />
-            <div style={styles.results}>
-                {this.renderPreselect()}
-                {this.renderResults()}
-            </div>
+                {/*{this.renderPreselect()}*/}
+            {this.renderResults()}
         </React.Fragment>;
     }
 }
