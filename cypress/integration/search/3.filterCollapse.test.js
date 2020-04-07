@@ -14,4 +14,9 @@ describe('Filter Collapse', ()=> {
         cy.get('#cypress_collapseFilters').click();
         cy.filters().containsNotAll(selectedTerms);
     });
+
+    it('Should be able to open filters', ()=>{
+        cy.get('#cypress_openFilters').click();
+        cy.filters().containsAll(selectedTerms);
+    });
 });

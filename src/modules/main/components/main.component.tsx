@@ -7,6 +7,8 @@ import {DedupeModel} from "../../results/models/dedupe.model";
 import fetchDedupes from "../../results/services/dedupeDataProvider.service";
 import Results from "../../results/components/results.component";
 import {FiltersUiModel} from "../../filters/components/filtersUi.model";
+import Header from "../../header/components/header.component";
+import ContentWrapper from "./contentWrapper.component";
 
 export default class Main extends React.Component<{}, {
     selectedFilters:FiltersModel,
@@ -48,6 +50,7 @@ export default class Main extends React.Component<{}, {
         this.filtersUi = {
             filtersOpen: null,
             closeFilters: ()=>this.uiSetFiltersOpen(false),
+            collapseFilters: ()=>this.uiSetFiltersOpen(!this.state.ui.filtersOpen),
             openFilters: ()=>this.uiSetFiltersOpen(true)
         };
     }
@@ -68,14 +71,11 @@ export default class Main extends React.Component<{}, {
 
     renderResults(){
         if (this.state.loadingDedupes) return <Loading message={'Searching duplicates...'}/>;
-        return <Results
-            filteredDedupes={this.state.results.dedupes}
-            filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}
-        />;
+        return <Results filteredDedupes={this.state.results.dedupes} />;
     }
 
     renderPreselect(){
-        if (!this.state.selectedFilters.organisationUnit) return <div onClick={this.preselect} style={{marginLeft: 200}}>preselect</div>
+        if (!this.state.selectedFilters.organisationUnit) return <div onClick={this.preselect}>preselect</div>
     }
 
     preselect = ()=>{
@@ -103,8 +103,11 @@ export default class Main extends React.Component<{}, {
                 onSearchClick={this.onSearchClick}
                 filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}
             />
-            {this.renderPreselect()}
-            {this.renderResults()}
+            <ContentWrapper filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}>
+                <Header selectedFilters={this.state.selectedFilters} filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}/>
+                {this.renderPreselect()}
+                {this.renderResults()}
+            </ContentWrapper>
         </React.Fragment>;
     }
 }

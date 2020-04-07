@@ -29,7 +29,7 @@ function renderSelectFilters(
     onFiltersSelect: (filterType:FilterType, filterValue:string)=>void,
     filterOptionsProvider: FilterOptionsProvider
 ) {
-    return Object.keys(selectedFilters).map((filterType:string)=>{
+        return Object.keys(selectedFilters).map((filterType:string)=>{
         let filterOptions;
         if (filterType!=='period') filterOptions = filterOptionsProvider.getFilterOptions(filterType as FilterType);
         else filterOptions = filterOptionsProvider.getPeriodOptions(selectedFilters.dataType);
