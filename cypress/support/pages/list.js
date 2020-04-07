@@ -15,3 +15,7 @@ Cypress.Commands.add('searchDedupes', ()=>{
     cy.loadingDone();
     cy.get(`#cypress_searchDedupes`).click();
 });
+
+Cypress.Commands.add('filters', ()=>{
+    return cy.get('#cypress_filters');
+});

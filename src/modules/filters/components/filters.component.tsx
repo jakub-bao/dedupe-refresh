@@ -19,7 +19,7 @@ const styles = {
 };
 
 function CloseDrawerIcon({onClick}:{onClick:()=>void}){
-    return <IconButton onClick={onClick} style={styles.closeDrawerIcon}>
+    return <IconButton onClick={onClick} style={styles.closeDrawerIcon} id='cypress_collapseFilters'>
         <ChevronLeft/>
     </IconButton>
 }
@@ -55,6 +55,7 @@ export default function Filters({selectedFilters, onFiltersSelect, filterOptions
     filtersUi: FiltersUiModel
 }) {
     return <Drawer
+        id='cypress_filters'
         anchor='left'
         variant="persistent"
         open={filtersUi.filtersOpen}
