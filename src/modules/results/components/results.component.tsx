@@ -14,18 +14,25 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 235,
         marginRight: 15
     },
-    rootWithOpenFilters: {
+    rootClosedFilters: {
         marginLeft: 15
     }
 }));
+
+function Indent({filtersOpen, classes, children}:{filtersOpen: boolean, classes: any, children: any}){
+    console.log(filtersOpen);
+    console.log({[classes.rootWithOpenFilters]: filtersOpen});
+    console.log(clsx(classes.root, {[classes.rootWithOpenFilters]: filtersOpen}));
+    return <div className={clsx(classes.root, {[classes.rootClosedFilters]: !filtersOpen})}>
+        {children}
+    </div>;
+}
 
 export default function Results({filteredDedupes, filtersUi}:{
     filteredDedupes: DedupeModel[],
     filtersUi: FiltersUiModel
 }) {
     const classes = useStyles();
-    if (!filteredDedupes) return <Typography>Start by selecting dedupes on the left...</Typography>
-    return <div className={clsx(classes.root, {[classes.rootWithOpenFilters]: filtersUi.filtersOpen})}>
-        <ResultsTable filteredDedupes={filteredDedupes}/>
-    </div>;
+    if (!filteredDedupes) return <Indent filtersOpen={filtersUi.filtersOpen} classes={classes}><Typography>Start by selecting dedupes on the left...</Typography></Indent>;
+    return <Indent filtersOpen={filtersUi.filtersOpen} classes={classes}><ResultsTable filteredDedupes={filteredDedupes}/></Indent>;
 }

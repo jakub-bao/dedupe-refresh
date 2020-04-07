@@ -70,7 +70,7 @@ export default class Main extends React.Component<{}, {
         if (this.state.loadingDedupes) return <Loading message={'Searching duplicates...'}/>;
         return <Results
             filteredDedupes={this.state.results.dedupes}
-            filtersUi={this.filtersUi}
+            filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}
         />;
     }
 
