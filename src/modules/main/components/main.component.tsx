@@ -21,7 +21,10 @@ export default class Main extends React.Component<{}, {
         dedupes: DedupeModel[]
     }
     loadingFilterOptions: boolean,
-    loadingDedupes: boolean
+    loadingDedupes: boolean,
+    ui: {
+        filtersOpen: boolean
+    }
 }> {
     filterOptionsProvider:FilterOptionsProvider = new FilterOptionsProvider();
     constructor(props) {
@@ -40,7 +43,10 @@ export default class Main extends React.Component<{}, {
                 dedupes: null
             },
             loadingFilterOptions: true,
-            loadingDedupes: false
+            loadingDedupes: false,
+            ui: {
+                filtersOpen: true
+            }
         };
         this.filterOptionsProvider.init().then(()=>{
             this.setState({loadingFilterOptions:false});
@@ -71,12 +77,18 @@ export default class Main extends React.Component<{}, {
     }
 
     preselect = ()=>{
-        let selectedFilters = {...this.state.selectedFilters}
+        let selectedFilters = {...this.state.selectedFilters};
         selectedFilters.organisationUnit = 'XtxUYCsDWrR';
         selectedFilters.dataType = 'RESULTS';
         selectedFilters.period = '2020Q2';
         this.setState({selectedFilters});
         setTimeout(this.onSearchClick, 0);
+    };
+
+    uiSetFiltersOpen = (open:boolean)=>{
+        let ui = {...this.state.ui};
+        ui.filtersOpen = open;
+        this.setState({ui})
     };
 
     render() {
@@ -87,6 +99,7 @@ export default class Main extends React.Component<{}, {
                 onFiltersSelect={this.onFiltersSelect}
                 filterOptionsProvider={this.filterOptionsProvider}
                 onSearchClick={this.onSearchClick}
+                filtersUi={{filtersOpen:this.state.ui.filtersOpen, closeFilters: ()=>this.uiSetFiltersOpen(false)}}
             />
             <div style={styles.results}>
                 {this.renderPreselect()}

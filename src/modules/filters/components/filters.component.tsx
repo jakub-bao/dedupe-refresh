@@ -1,16 +1,28 @@
 import React from "react";
-import {Button, Drawer, Typography} from "@material-ui/core";
+import {Button, Drawer, IconButton, Typography} from "@material-ui/core";
 import {FiltersModel, FilterType} from "../models/filters.model";
 import SelectFilter from "./selectFilter.component";
-import "./filters.component.css";
 import FilterOptionsProvider from "../services/filterOptionsProvider.service";
-import {FilterList} from "@material-ui/icons";
-
+import {ChevronLeft, FilterList} from "@material-ui/icons";
+import { PositionProperty } from "csstype";
+import "./filters.component.css";
+import {FiltersUiModel} from "./filtersUi.model";
 const styles = {
     filtersIcon: {
         verticalAlign: 'sub'
+    },
+    closeDrawerIcon: {
+        position: 'absolute' as PositionProperty,
+        top: 0,
+        right: 0
     }
 };
+
+function CloseDrawerIcon({onClick}:{onClick:()=>void}){
+    return <IconButton onClick={onClick} style={styles.closeDrawerIcon}>
+        <ChevronLeft/>
+    </IconButton>
+}
 
 function renderSelectFilters(
     selectedFilters: FiltersModel,
@@ -35,18 +47,20 @@ function searchEnabled(selectedFilters:FiltersModel):boolean{
     return !!selectedFilters.organisationUnit && !!selectedFilters.dataType && !!selectedFilters.period;
 }
 
-export default function Filters({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick}:{
+export default function Filters({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, filtersUi}:{
     selectedFilters: FiltersModel,
     onFiltersSelect: (filterType:FilterType, filterValue:string)=>void,
     filterOptionsProvider: FilterOptionsProvider,
-    onSearchClick: ()=>void
+    onSearchClick: ()=>void,
+    filtersUi: FiltersUiModel
 }) {
     return <Drawer
         anchor='left'
         variant="persistent"
-        open={true}
+        open={filtersUi.filtersOpen}
         classes={{paper:'filters_root'}}
     >
+        <CloseDrawerIcon onClick={filtersUi.closeFilters}/>
         <Typography variant='h6'>
             <FilterList style={styles.filtersIcon}/>
             Filters
