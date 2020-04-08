@@ -104,7 +104,11 @@ export default class Main extends React.Component<{}, {
                 filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}
             />
             <ContentWrapper filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}>
-                <Header selectedFilters={this.state.selectedFilters} filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}/>
+                <Header
+                    selectedFilters={this.state.selectedFilters}
+                    filterOptionsProvider={this.filterOptionsProvider}
+                    filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}
+                />
                 {this.renderPreselect()}
                 {this.renderResults()}
             </ContentWrapper>

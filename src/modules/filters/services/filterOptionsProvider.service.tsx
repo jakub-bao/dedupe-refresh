@@ -8,7 +8,7 @@ function transformIdNameList(list:{id:string, displayName}[]):idName[]{
 }
 
 export default class FilterOptionsProvider {
-    private orgUnitList: idName[];
+    private organisationUnitList: idName[];
     private dataTypeList: idName[] = [{id: 'TARGETS', name: 'MER Targets'}, {id: 'RESULTS', name: 'MER Results'}];
     private periodList: DataTypePeriodList;
     private agencyList: idName[];
@@ -43,8 +43,8 @@ export default class FilterOptionsProvider {
             let userOus = response[0];
             let allOus = response[1];
             let isGlobal = userOus.map(ou=>ou.name).includes('Global');
-            if (isGlobal) return this.orgUnitList = allOus;
-            else return this.orgUnitList = userOus;
+            if (isGlobal) return this.organisationUnitList = allOus;
+            else return this.organisationUnitList = userOus;
         });
     }
 
@@ -73,15 +73,7 @@ export default class FilterOptionsProvider {
     }
 
     getFilterOptions(type:FilterType){
-        switch(type){
-            case FilterType.organisationUnit: return this.orgUnitList;
-            case FilterType.dataType: return this.dataTypeList;
-            case FilterType.agency: return this.agencyList;
-            case FilterType.technicalArea: return this.technicalAreaList;
-            case FilterType.dedupeType: return this.dedupeTypeList;
-            case FilterType.includeResolved: return this.includeResolvedList;
-            throw new Error('Unknown filter option')
-        }
+        return this[type+'List'];
     }
 
     getPeriodOptions(dataType:string){
@@ -89,8 +81,15 @@ export default class FilterOptionsProvider {
         return this.periodList[dataType.toLocaleLowerCase()];
     }
 
-    getAllPeriods():DataTypePeriodList{
-        return this.periodList;
+    getValueNameById(filterType:FilterType, filterValue:string|boolean):string{
+        if (filterType===FilterType.includeResolved) {
+            if (filterValue) return 'Include Resolved';
+            return 'Unresolved Only';
+        }
+        if (filterType===FilterType.period) {
+            return [].concat(this.periodList.results,this.periodList.targets).filter(idName=>idName.id===filterValue)[0].name;
+        }
+        return this[filterType+'List'].filter(idName=>idName.id===filterValue)[0].name;
     }
 }
 
