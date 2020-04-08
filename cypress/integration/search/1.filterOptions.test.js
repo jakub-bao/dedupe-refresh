@@ -24,16 +24,14 @@ describe('Filters > Filter Options', ()=>{
 
     Object.keys(filterOptions).map(filterType=>generateFilterOptionsTest(filterType, filterOptions[filterType]));
 
-    it(`Should have all Org Units for super user`, ()=>{
-        cy.loginAs('superAdmin');
-        cy.goHome();
-        cy.get(`#cypress_filter_organisationUnit`).click();
-        cy.containsAll([
+    it('Should have filter breadcrumbs', ()=>{
+        cy.get('#cypress_filterBreadCrumb').containsAll([
             'Rwanda',
-            'Asia Region',
-            'Botswana'
-        ]);
-        cy.get('.MuiMenuItem-root:nth-child(1)').click();
+            'MER Targets',
+            'Oct 2020 - Sep 2021',
+            'Dedupe adjustments Agency',
+            'AGYW',
+            'Pure Dedupes'
+        ])
     });
-
 });

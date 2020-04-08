@@ -29,6 +29,8 @@ export default function Header({selectedFilters, filterOptionsProvider, filtersU
             <Filter/>
             Filters
         </Button>
-        {renderFilterList(selectedFilters, filterOptionsProvider)}
+        <span id='cypress_filterBreadCrumb'>
+            {renderFilterList(selectedFilters, filterOptionsProvider)}
+        </span>
     </React.Fragment>;
 }
