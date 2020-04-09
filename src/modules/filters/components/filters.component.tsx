@@ -4,9 +4,11 @@ import {FiltersModel, FilterType} from "../models/filters.model";
 import SelectFilter from "./selectFilter.component";
 import FilterOptionsProvider from "../services/filterOptionsProvider.service";
 import {ChevronLeft, FilterList} from "@material-ui/icons";
-import { PositionProperty } from "csstype";
+import {PositionProperty} from "csstype";
 import "./filters.component.css";
 import {FiltersUiModel} from "./filtersUi.model";
+import ResolvedCheckbox from "./resolvedCheckbox.component";
+
 const styles = {
     filtersIcon: {
         verticalAlign: 'sub'
@@ -26,22 +28,27 @@ function CloseDrawerIcon({onClick}:{onClick:()=>void}){
 
 function renderSelectFilters(
     selectedFilters: FiltersModel,
-    onFiltersSelect: (filterType:FilterType, filterValue:string)=>void,
+    onFiltersSelect: (filterType:FilterType, filterValue:string|boolean)=>void,
     filterOptionsProvider: FilterOptionsProvider
 ) {
-        return Object.keys(selectedFilters).map((filterType:string)=>{
-        let filterOptions;
-        if (filterType!=='period') filterOptions = filterOptionsProvider.getFilterOptions(filterType as FilterType);
-        else filterOptions = filterOptionsProvider.getPeriodOptions(selectedFilters.dataType);
-        return <SelectFilter
-            key={filterType}
-            filterType={filterType as FilterType}
-            filterValue={selectedFilters[filterType]}
-            onFilterSelect={(filterValue:string)=>onFiltersSelect(filterType as FilterType, filterValue)}
-            filterOptions={filterOptions}
-        />
-    });
+        return Object.keys(selectedFilters).map((filterType:FilterType)=>{
+            let filterOptions;
+            if (filterType!=='period') filterOptions = filterOptionsProvider.getFilterOptions(filterType);
+            else filterOptions = filterOptionsProvider.getPeriodOptions(selectedFilters.dataType);
+            if (filterType===FilterType.includeResolved) return <ResolvedCheckbox
+                includeResolved={selectedFilters.includeResolved}
+                onChange={()=>onFiltersSelect(FilterType.includeResolved, !selectedFilters.includeResolved)}
+            />
+            return <SelectFilter
+                key={filterType}
+                filterType={filterType}
+                filterValue={selectedFilters[filterType]}
+                onFilterSelect={(filterValue:string)=>onFiltersSelect(filterType, filterValue)}
+                filterOptions={filterOptions}
+            />
+        });
 }
+
 
 function searchEnabled(selectedFilters:FiltersModel):boolean{
     return !!selectedFilters.organisationUnit && !!selectedFilters.dataType && !!selectedFilters.period;
@@ -49,7 +56,7 @@ function searchEnabled(selectedFilters:FiltersModel):boolean{
 
 export default function Filters({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, filtersUi}:{
     selectedFilters: FiltersModel,
-    onFiltersSelect: (filterType:FilterType, filterValue:string)=>void,
+    onFiltersSelect: (filterType:FilterType, filterValue:string|boolean)=>void,
     filterOptionsProvider: FilterOptionsProvider,
     onSearchClick: ()=>void,
     filtersUi: FiltersUiModel

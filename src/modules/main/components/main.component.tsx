@@ -62,7 +62,7 @@ export default class Main extends React.Component<{}, {
         });
     };
 
-    onFiltersSelect = (filterType:FilterType, filterValue:string):void=>{
+    onFiltersSelect = (filterType:FilterType, filterValue:string|boolean):void=>{
         if (this.state.selectedFilters[filterType]===filterValue) return;
         let selectedFilters = {...this.state.selectedFilters};
         selectedFilters[filterType] = filterValue;
