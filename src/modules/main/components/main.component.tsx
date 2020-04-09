@@ -13,7 +13,8 @@ import ContentWrapper from "./contentWrapper.component";
 export default class Main extends React.Component<{}, {
     selectedFilters:FiltersModel,
     results: {
-        dedupes: DedupeModel[]
+        dedupes: DedupeModel[],
+        selectedFilters: FiltersModel
     }
     loadingFilterOptions: boolean,
     loadingDedupes: boolean,
@@ -36,7 +37,8 @@ export default class Main extends React.Component<{}, {
                 includeResolved: null
             },
             results: {
-                dedupes: null
+                dedupes: null,
+                selectedFilters: null
             },
             loadingFilterOptions: true,
             loadingDedupes: false,
@@ -58,7 +60,8 @@ export default class Main extends React.Component<{}, {
     onSearchClick = ()=>{
         this.setState({loadingDedupes: true});
         fetchDedupes(this.state.selectedFilters).then(dedupes=>{
-            this.setState({results: {dedupes}, loadingDedupes: false});
+            let selectedFilters = {...this.state.selectedFilters};
+            this.setState({results: {dedupes, selectedFilters}, loadingDedupes: false});
         });
     };
 
@@ -75,7 +78,8 @@ export default class Main extends React.Component<{}, {
     }
 
     renderPreselect(){
-        if (!this.state.selectedFilters.organisationUnit) return <div onClick={this.preselect}>preselect</div>
+        if(process.env.NODE_ENV === 'production') return null;
+        if (!this.state.selectedFilters.organisationUnit) return <div style={{position: 'absolute', bottom: 10, right: 10}} onClick={this.preselect}>preselect</div>
     }
 
     preselect = ()=>{
@@ -105,12 +109,12 @@ export default class Main extends React.Component<{}, {
             />
             <ContentWrapper filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}>
                 <Header
-                    selectedFilters={this.state.selectedFilters}
+                    selectedFilters={this.state.results.selectedFilters}
                     filterOptionsProvider={this.filterOptionsProvider}
                     filtersUi={{...this.filtersUi, filtersOpen: this.state.ui.filtersOpen}}
                 />
-                {this.renderPreselect()}
                 {this.renderResults()}
+                {this.renderPreselect()}
             </ContentWrapper>
         </React.Fragment>;
     }

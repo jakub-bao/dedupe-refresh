@@ -10,6 +10,7 @@ const styles = {
 };
 
 function renderFilterList(selectedFilters:FiltersModel, filterOptionsProvider:FilterOptionsProvider) {
+    if (!selectedFilters) return null;
     return Object.keys(selectedFilters)
         .filter(filterType=>selectedFilters[filterType])
         .map((filterType:FilterType)=>{
@@ -33,6 +34,6 @@ export default function Header({selectedFilters, filterOptionsProvider, filtersU
             {renderFilterList(selectedFilters, filterOptionsProvider)}
         </span>
         <Divider/>
-        
+
     </React.Fragment>;
 }
