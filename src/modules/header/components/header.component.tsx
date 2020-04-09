@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Chip, Typography} from "@material-ui/core";
+import {Button, Chip, Divider, Typography} from "@material-ui/core";
 import {FiltersUiModel} from "../../filters/components/filtersUi.model";
 import {FiltersModel, FilterType} from "../../filters/models/filters.model";
 import {Filter} from "@material-ui/icons";
@@ -32,5 +32,7 @@ export default function Header({selectedFilters, filterOptionsProvider, filtersU
         <span id='cypress_filterBreadCrumb'>
             {renderFilterList(selectedFilters, filterOptionsProvider)}
         </span>
+        <Divider/>
+        
     </React.Fragment>;
 }
