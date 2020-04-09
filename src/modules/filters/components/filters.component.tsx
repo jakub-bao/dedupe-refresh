@@ -7,7 +7,7 @@ import {ChevronLeft, FilterList} from "@material-ui/icons";
 import {PositionProperty} from "csstype";
 import "./filters.component.css";
 import {FiltersUiModel} from "./filtersUi.model";
-import ResolvedCheckbox from "./resolvedCheckbox.component";
+import CheckboxFilter from "./checkboxFilter.component";
 
 const styles = {
     filtersIcon: {
@@ -35,8 +35,9 @@ function renderSelectFilters(
             let filterOptions;
             if (filterType!=='period') filterOptions = filterOptionsProvider.getFilterOptions(filterType);
             else filterOptions = filterOptionsProvider.getPeriodOptions(selectedFilters.dataType);
-            if (filterType===FilterType.includeResolved) return <ResolvedCheckbox
-                includeResolved={selectedFilters.includeResolved}
+            if (filterType===FilterType.includeResolved) return <CheckboxFilter
+                checked={selectedFilters.includeResolved}
+                label='Include Resolved'
                 onChange={()=>onFiltersSelect(FilterType.includeResolved, !selectedFilters.includeResolved)}
             />
             return <SelectFilter

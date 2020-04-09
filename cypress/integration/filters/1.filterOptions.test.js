@@ -7,6 +7,15 @@ const filterOptions = {
     dedupeType: {contains:['Pure Dedupes', 'Crosswalk Dedupes']}
 };
 
+const selectedOptions = [
+    'Rwanda',
+    'MER Targets',
+    'Oct 2020 - Sep 2021',
+    'Dedupe adjustments Agency',
+    'AGYW',
+    'Pure Dedupes'
+];
+
 function generateFilterOptionsTest(filterType, options){
     it(`Should have options for ${filterType} filter`, ()=>{
         cy.get(`#cypress_filter_${filterType}`).click();
@@ -25,13 +34,8 @@ describe('Filters > Filter Options', ()=>{
     Object.keys(filterOptions).map(filterType=>generateFilterOptionsTest(filterType, filterOptions[filterType]));
 
     it('Should have filter breadcrumbs', ()=>{
-        cy.get('#cypress_filterBreadCrumb').containsAll([
-            'Rwanda',
-            'MER Targets',
-            'Oct 2020 - Sep 2021',
-            'Dedupe adjustments Agency',
-            'AGYW',
-            'Pure Dedupes'
-        ])
+        cy.header().containsNotAll(selectedOptions);
+        cy.searchDedupes();
+        cy.header().containsAll(selectedOptions);
     });
 });

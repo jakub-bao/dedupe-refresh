@@ -24,7 +24,7 @@ export default function Header({selectedFilters, filterOptionsProvider, filtersU
     filterOptionsProvider: FilterOptionsProvider
     filtersUi: FiltersUiModel
 }) {
-    return <React.Fragment>
+    return <div id='cypress_header'>
         <Typography variant='h4'>Data Deduplication</Typography>
         <Button onClick={filtersUi.collapseFilters} variant='outlined' size='small' id='cypress_openFilters'>
             <Filter/>
@@ -34,6 +34,5 @@ export default function Header({selectedFilters, filterOptionsProvider, filtersU
             {renderFilterList(selectedFilters, filterOptionsProvider)}
         </span>
         <Divider/>
-
-    </React.Fragment>;
+    </div>;
 }
