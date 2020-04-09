@@ -9,6 +9,7 @@ import Results from "../../results/components/results.component";
 import {FiltersUiModel} from "../../filters/components/filtersUi.model";
 import Header from "../../header/components/header.component";
 import ContentWrapper from "./contentWrapper.component";
+import NetworkError from "../../shared/components/networkError.component";
 
 export default class Main extends React.Component<{}, {
     selectedFilters:FiltersModel,
@@ -20,7 +21,8 @@ export default class Main extends React.Component<{}, {
     loadingDedupes: boolean,
     ui: {
         filtersOpen: boolean
-    }
+    },
+    error: boolean
 }> {
     filterOptionsProvider:FilterOptionsProvider = new FilterOptionsProvider();
     filtersUi:FiltersUiModel;
@@ -44,7 +46,8 @@ export default class Main extends React.Component<{}, {
             loadingDedupes: false,
             ui: {
                 filtersOpen: true
-            }
+            },
+            error: false
         };
         this.filterOptionsProvider.init().then(()=>{
             this.setState({loadingFilterOptions:false});
@@ -59,9 +62,11 @@ export default class Main extends React.Component<{}, {
 
     onSearchClick = ()=>{
         this.setState({loadingDedupes: true});
+        let selectedFilters = {...this.state.selectedFilters};
         fetchDedupes(this.state.selectedFilters).then(dedupes=>{
-            let selectedFilters = {...this.state.selectedFilters};
-            this.setState({results: {dedupes, selectedFilters}, loadingDedupes: false});
+            this.setState({results: {dedupes, selectedFilters}, loadingDedupes: false, error: false});
+        }).catch(()=>{
+            this.setState({loadingDedupes:false, results: {dedupes: null, selectedFilters}, error: true});
         });
     };
 
@@ -74,17 +79,21 @@ export default class Main extends React.Component<{}, {
 
     renderResults(){
         if (this.state.loadingDedupes) return <Loading message={'Searching duplicates...'}/>;
+        if (this.state.error) return <NetworkError/>;
         return <Results filteredDedupes={this.state.results.dedupes} />;
     }
 
     renderPreselect(){
         if(process.env.NODE_ENV === 'production') return null;
-        if (!this.state.selectedFilters.organisationUnit) return <div style={{position: 'absolute', bottom: 10, right: 10}} onClick={this.preselect}>preselect</div>
+        return <div style={{position: 'absolute', bottom: 10, right: 10}}>
+            <span onClick={()=>this.preselect('XtxUYCsDWrR')}>Rwanda</span>
+            <span onClick={()=>this.preselect('PqlFzhuPcF1')}>Nigeria</span>
+        </div>;
     }
 
-    preselect = ()=>{
+    preselect = (orgUnitId:string)=>{
         let selectedFilters = {...this.state.selectedFilters};
-        selectedFilters.organisationUnit = 'XtxUYCsDWrR';
+        selectedFilters.organisationUnit = orgUnitId;
         selectedFilters.dataType = 'RESULTS';
         selectedFilters.period = '2020Q2';
         this.setState({selectedFilters});
