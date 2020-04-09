@@ -36,6 +36,7 @@ function renderSelectFilters(
             if (filterType!=='period') filterOptions = filterOptionsProvider.getFilterOptions(filterType);
             else filterOptions = filterOptionsProvider.getPeriodOptions(selectedFilters.dataType);
             if (filterType===FilterType.includeResolved) return <CheckboxFilter
+                key={0}
                 checked={selectedFilters.includeResolved}
                 label='Include Resolved'
                 onChange={()=>onFiltersSelect(FilterType.includeResolved, !selectedFilters.includeResolved)}

@@ -15,7 +15,7 @@ function renderFilterList(selectedFilters:FiltersModel, filterOptionsProvider:Fi
         .filter(filterType=>selectedFilters[filterType])
         .map((filterType:FilterType)=>{
             const valueName = filterOptionsProvider.getValueNameById(filterType, selectedFilters[filterType]);
-            return <Chip label={valueName} size="small" style={styles.chip}/>
+            return <Chip label={valueName} size="small" style={styles.chip} key={valueName}/>
     });
 }
 
