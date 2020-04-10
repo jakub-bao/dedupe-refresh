@@ -25,5 +25,7 @@ describe('Rwanda All Dedupes', ()=> {
         ]);
         cy.getResultByOrder(0).containsAll(['Maximum (10040)', 'Sum (20060)']);
         cy.getResultByOrder(1).containsAll(['Maximum (10030)', 'Sum (20040)']);
+        cy.getResultByOrder(0).checkResolved('none');
+        cy.getResultByOrder(1).checkResolved('none');
     });
 });

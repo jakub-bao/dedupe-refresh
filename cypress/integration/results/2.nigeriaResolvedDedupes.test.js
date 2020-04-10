@@ -32,7 +32,6 @@ describe('Nigeria Resolved Dedupes', ()=> {
         cy.get('#cypress_IncludeResolved').click();
         cy.searchDedupes();
         cy.getResultByOrder(0).containsAll(sumResolvedDedupeInfo);
-        cy.get('.cypress_resolutionMethodCell').find('.cypress__sum').checked(true);
-        cy.get('.cypress_resolutionMethodCell').find('.cypress__maximum').checked(false);
+        cy.getResultByOrder(0).checkResolved('sum');
     });
 });
