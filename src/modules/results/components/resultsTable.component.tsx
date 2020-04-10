@@ -1,5 +1,5 @@
 import React from "react";
-import MaterialTable from "material-table";
+import MaterialTable, {MTableBodyRow} from "material-table";
 import {DedupeModel} from "../models/dedupe.model";
 import ResolutionMethodCell from "../../resolutionMethodCell/components/resolutionMethodCell.component";
 
@@ -39,7 +39,8 @@ const columnSettings = [
 ];
 
 const customComponents = {
-    Container: props=><div {...props}></div>
+    Container: props=><div {...props}></div>,
+    Row: props=><MTableBodyRow {...props} className='cypress_resultsRow'/>
 };
 
 function iterateValuesFactory(property:string){
