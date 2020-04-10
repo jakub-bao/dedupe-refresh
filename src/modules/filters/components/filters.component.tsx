@@ -26,7 +26,7 @@ function CloseDrawerIcon({onClick}:{onClick:()=>void}){
     </IconButton>
 }
 
-function renderSelectFilters(
+function renderFilters(
     selectedFilters: FiltersModel,
     onFiltersSelect: (filterType:FilterType, filterValue:string|boolean)=>void,
     filterOptionsProvider: FilterOptionsProvider
@@ -75,7 +75,7 @@ export default function Filters({selectedFilters, onFiltersSelect, filterOptions
             <FilterList style={styles.filtersIcon}/>
             Filters
         </Typography>
-        {renderSelectFilters(selectedFilters, onFiltersSelect, filterOptionsProvider)}
+        {renderFilters(selectedFilters, onFiltersSelect, filterOptionsProvider)}
         <br/>
         <Button variant="contained" color="secondary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)} id='cypress_searchDedupes'>
             Search Dedupes

@@ -18,9 +18,11 @@ export default class ResolutionMethodCell extends React.Component<{dedupe:Dedupe
     };
 
     render() {
+        const resolutionSum = this.props.dedupe.resolution.availableValues.sum;
+        const resolutionMax = this.props.dedupe.resolution.availableValues.max;
         return <RadioGroup value={this.state.resolutionMethod} onChange={this.onResolutionChange}>
-            <FormControlLabel value="maximum" control={<Radio/>} label={`Maximum`}/>
-            <FormControlLabel value="sum" control={<Radio/>} label={`Sum ()`}/>
+            <FormControlLabel value="maximum" control={<Radio/>} label={`Maximum (${resolutionMax})`}/>
+            <FormControlLabel value="sum" control={<Radio/>} label={`Sum (${resolutionSum})`}/>
             <FormControlLabel value="custom" control={<Radio/>} label={`Custom Value`}/>
         </RadioGroup>
     }

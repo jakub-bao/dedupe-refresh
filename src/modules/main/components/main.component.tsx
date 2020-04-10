@@ -33,10 +33,10 @@ export default class Main extends React.Component<{}, {
                 organisationUnit: null,
                 dataType: null,
                 period: null,
+                includeResolved: false,
+                dedupeType: 'PURE',
                 agency: null,
                 technicalArea: null,
-                dedupeType: null,
-                includeResolved: null
             },
             results: {
                 dedupes: null,

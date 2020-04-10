@@ -20,14 +20,7 @@ export enum ResolutionMethodType {
     maximum= 'maximum',
     sum = 'sum',
     custom = 'custom'
-};
-
-// export type DedupeStatusModel = {
-//     resolved: boolean;
-//     resolutionMethod?: ResolutionMethodType;
-//     resolvedValue?: number;
-//     dedupeValue?:number;
-// }
+}
 
 export type DedupeResolvedByModel = {
     resolutionMethod: ResolutionMethodType;
