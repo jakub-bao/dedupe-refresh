@@ -1,3 +1,6 @@
 de=FI2s716RRZc&co=inrjeyWelOD&ds=qzVASYuaIey&ou=BY7bSKwPjPJ&pe=2020Q2&value=20010&cc=wUpfppgjEza&cp=nwyMXmV0vPR
 de=FI2s716RRZc&co=inrjeyWelOD&ds=qzVASYuaIey&ou=BY7bSKwPjPJ&pe=2020Q2&value=20020&cc=wUpfppgjEza&cp=EqCzVuUpqZW
 de=FI2s716RRZc&co=inrjeyWelOD&ds=qzVASYuaIey&ou=BY7bSKwPjPJ&pe=2020Q2&value=0&cc=wUpfppgjEza&cp=xEzelmtHWPn
+de=qhGxKnmrZBd&co=NMYN9FAPqWa&ds=qzVASYuaIey&ou=p7M264Wg1qB&pe=2020Q2&value=30010&cc=wUpfppgjEza&cp=gBvOZlOT7vE
+de=qhGxKnmrZBd&co=NMYN9FAPqWa&ds=qzVASYuaIey&ou=p7M264Wg1qB&pe=2020Q2&value=30020&cc=wUpfppgjEza&cp=SnYYwQ0MNdg
+de=qhGxKnmrZBd&co=NMYN9FAPqWa&ds=qzVASYuaIey&ou=p7M264Wg1qB&pe=2020Q2&value=-30010&cc=wUpfppgjEza&cp=xEzelmtHWPn

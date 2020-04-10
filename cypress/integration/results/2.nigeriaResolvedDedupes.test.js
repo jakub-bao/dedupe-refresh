@@ -13,6 +13,18 @@ const sumResolvedDedupeInfo = [
     'Sum (40030)'
 ];
 
+const maxResolvedDedupeInfo = [
+    'CATHOLIC CARITAS FOUNDATION O F NIGERIA',
+    'APIN PUBLIC HEALTH INITIATIVE S LTD/GTE',
+    '16848',
+    '16850',
+    '30010',
+    '30020',
+    'HHS/CDC',
+    'Maximum (30020)',
+    'Sum (60030)'
+];
+
 describe('Nigeria Resolved Dedupes', ()=> {
     before(() => {
         cy.loginAs('de-interAgency-nigeria');
@@ -28,10 +40,15 @@ describe('Nigeria Resolved Dedupes', ()=> {
         cy.results().contains('No duplicates found matching the selected criteria');
     });
 
-    it('Should be able to see resolved dedupes', ()=>{
+    it('Should be able to see SUM resolved dedupe', ()=>{
         cy.get('#cypress_IncludeResolved').click();
         cy.searchDedupes();
-        cy.getResultByOrder(0).containsAll(sumResolvedDedupeInfo);
-        cy.getResultByOrder(0).checkResolved('sum');
+        cy.getResultByOrder(1).containsAll(sumResolvedDedupeInfo);
+        cy.getResultByOrder(1).checkResolved('sum');
+    });
+
+    it('Should be able to see MAX resolved dedupe', ()=>{
+        cy.getResultByOrder(0).containsAll(maxResolvedDedupeInfo);
+        cy.getResultByOrder(0).checkResolved('maximum');
     });
 });
