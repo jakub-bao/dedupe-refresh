@@ -9,6 +9,7 @@ describe('Search Connection Error', ()=> {
         cy.setFilter('dataType', 'RESULTS');
         cy.setFilter('period', '2020Q2');
         cy.loginAs('fail');
+        cy.wait(1000);
         cy.searchDedupes();
         cy.contains('Connection Error');
     });

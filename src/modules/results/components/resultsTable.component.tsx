@@ -42,7 +42,6 @@ const customComponents = {
     Container: props=><div {...props}></div>
 };
 
-
 function iterateValuesFactory(property:string){
     return function(dedupe:DedupeModel){
         return <ul style={styles.valueList}>

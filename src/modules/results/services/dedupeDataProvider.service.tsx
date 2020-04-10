@@ -1,7 +1,11 @@
 import {getData} from "../../shared/services/dataApi.service";
 import {
     DedupeModel,
-    DuplicateModel
+    DedupeResolutionAvailableValues,
+    DedupeResolutionModel,
+    DedupeResolvedByModel,
+    DuplicateModel,
+    ResolutionMethodType
 } from "../models/dedupe.model";
 import {FiltersModel} from "../../filters/models/filters.model";
 
@@ -29,9 +33,53 @@ function extractDuplicates(rows:namedRow[]):DuplicateModel[]{
     })
 }
 
+function isDedupeFilter(namedRow:namedRow){
+    return namedRow.partnerName==='Dedupe adjustment';
+}
+
+function getResolvedBy(selectedRows:namedRow[], availableValues:DedupeResolutionAvailableValues):DedupeResolvedByModel{
+    const dedupeAdjustmentEntry = selectedRows.filter(isDedupeFilter)[0].value;
+    const resolutionValue = selectedRows.map(record=>record.value).reduce((a,b)=>a+b,0);
+    if (dedupeAdjustmentEntry===0) return {
+        resolutionValue: resolutionValue,
+        resolutionMethod: ResolutionMethodType.sum,
+        deduplicationAdjustmentValue: dedupeAdjustmentEntry
+    }
+    if (resolutionValue===availableValues.max) return {
+        resolutionValue: resolutionValue,
+        resolutionMethod: ResolutionMethodType.maximum,
+        deduplicationAdjustmentValue: dedupeAdjustmentEntry
+    }
+    return {
+        resolutionValue: resolutionValue,
+        resolutionMethod: ResolutionMethodType.custom,
+        deduplicationAdjustmentValue: dedupeAdjustmentEntry
+    }
+}
+
+function getAvailableValues(selectedRows:namedRow[]):DedupeResolutionAvailableValues{
+    const enteredValues = selectedRows.filter(record=>record.value>=0).map(record=>record.value);
+    return {
+        sum: enteredValues.reduce((a,b)=>a+b,0),
+        max: Math.max(...enteredValues)
+    };
+}
+
+function getResolutionDetails(selectedRows: namedRow[]):DedupeResolutionModel{
+    console.debug(selectedRows);
+    const isResolved = selectedRows[0].duplicateStatus==='RESOLVED';
+    let resolution:DedupeResolutionModel = {
+        isResolved: isResolved,
+        availableValues: getAvailableValues(selectedRows)
+    };
+    if (resolution.isResolved) resolution.resolvedBy = getResolvedBy(selectedRows, resolution.availableValues);
+    console.debug(resolution);
+    return resolution;
+}
+
 function generateDedupe(selectedRows: namedRow[]):DedupeModel{
     let first = selectedRows[0];
-    let dedupe:DedupeModel = {
+    return {
         meta: {
             orgUnitId: first.orgUnitId,
             periodId: 'blank',
@@ -46,12 +94,9 @@ function generateDedupe(selectedRows: namedRow[]):DedupeModel{
             orgUnitName: first.orgUnitName,
             dataElementName: first.dataElementName
         },
-        status: {
-            resolved: first.duplicateStatus==='RESOLVED'
-        },
+        resolution: getResolutionDetails(selectedRows),
         duplicates: extractDuplicates(selectedRows)
     };
-    return dedupe;
 }
 
 function processResponse(rows:any[]):DedupeModel[]{
@@ -90,15 +135,15 @@ function nameRows(rows:any[]):namedRow[]{
             dataElementName: row[1],
             disAggregation: row[2],
             agencyName: row[3],
-            mechanismNumber: row[4],
+            mechanismNumber: parseInt(row[4]),
             partnerName: row[5],
-            value: row[6],
+            value: parseInt(row[6]),
             duplicateStatus: row[7],
             orgUnitId: row[8],
             dataElementId: row[9],
             categoryOptionComboId: row[10],
-            group: row[11],
-            totalGroups: row[12],
+            group: parseInt(row[11]),
+            totalGroups: parseInt(row[12]),
         }
     });
 }

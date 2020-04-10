@@ -16,8 +16,34 @@ export type DedupeInfoModel = {
     dataElementName: string;
 }
 
-export type DedupeStatusModel = {
-    resolved: boolean;
+export enum ResolutionMethodType {
+    maximum= 'maximum',
+    sum = 'sum',
+    custom = 'custom'
+};
+
+// export type DedupeStatusModel = {
+//     resolved: boolean;
+//     resolutionMethod?: ResolutionMethodType;
+//     resolvedValue?: number;
+//     dedupeValue?:number;
+// }
+
+export type DedupeResolvedByModel = {
+    resolutionMethod: ResolutionMethodType;
+    resolutionValue: number;
+    deduplicationAdjustmentValue: number;
+}
+
+export type DedupeResolutionAvailableValues = {
+    max: number;
+    sum: number;
+};
+
+export type DedupeResolutionModel = {
+    isResolved: boolean;
+    resolvedBy?: DedupeResolvedByModel;
+    availableValues: DedupeResolutionAvailableValues;
 }
 
 export type DuplicateModel = {
@@ -31,6 +57,6 @@ export type DedupeModel = {
     meta: DedupeMetaModel;
     data: DedupeDataModel;
     info: DedupeInfoModel;
-    status: DedupeStatusModel;
+    resolution: DedupeResolutionModel;
     duplicates: DuplicateModel[];
 }
