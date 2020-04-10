@@ -11,15 +11,15 @@ import {FiltersModel} from "../../filters/models/filters.model";
 
 function generateDedupeUrl(selectedFilters:FiltersModel):string{
     return `/sqlViews/wzpSd6j89wc/data?paging=false`
-        + `&var=ou:${selectedFilters.organisationUnit}`
-        + `&var=dt:${selectedFilters.dataType}`
-        + `&var=pe:${selectedFilters.period}`
-        + `&var=ty:${selectedFilters.dedupeType||'PURE'}`
-        + `&var=rs:${selectedFilters.includeResolved||false}`
+        + `&var=ou:${selectedFilters.requiredFilters.organisationUnit}`
+        + `&var=dt:${selectedFilters.requiredFilters.dataType}`
+        + `&var=pe:${selectedFilters.requiredFilters.period}`
+        + `&var=ty:${selectedFilters.requiredFilters.dedupeType||'PURE'}`
+        + `&var=rs:${selectedFilters.requiredFilters.includeResolved||false}`
         + `&var=ps:100000`
         + `&var=pg:1`
-        + `&var=ag:${selectedFilters.agency||'NONE'}`
-        + `&var=dg:${selectedFilters.technicalArea||'NONE'}`;
+        + `&var=ag:${selectedFilters.optionalFilters.agency||'NONE'}`
+        + `&var=dg:${selectedFilters.optionalFilters.technicalArea||'NONE'}`;
 }
 
 function extractDuplicates(rows:namedRow[]):DuplicateModel[]{

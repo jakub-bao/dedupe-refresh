@@ -1,6 +1,11 @@
 import React from "react";
-import {Button, Drawer, IconButton, Typography} from "@material-ui/core";
-import {FiltersModel, FilterType} from "../models/filters.model";
+import {Button, Divider, Drawer, IconButton, Typography} from "@material-ui/core";
+import {
+    FiltersModel,
+    FilterType,
+    OptionalFiltersModel,
+    RequiredFiltersModel,
+} from "../models/filters.model";
 import SelectFilter from "./selectFilter.component";
 import FilterOptionsProvider from "../services/filterOptionsProvider.service";
 import {ChevronLeft, FilterList} from "@material-ui/icons";
@@ -27,33 +32,34 @@ function CloseDrawerIcon({onClick}:{onClick:()=>void}){
 }
 
 function renderFilters(
-    selectedFilters: FiltersModel,
+    filterList: RequiredFiltersModel|OptionalFiltersModel,
     onFiltersSelect: (filterType:FilterType, filterValue:string|boolean)=>void,
     filterOptionsProvider: FilterOptionsProvider
 ) {
-        return Object.keys(selectedFilters).map((filterType:FilterType)=>{
+        return Object.keys(filterList).map((filterType:FilterType)=>{
             let filterOptions;
             if (filterType!=='period') filterOptions = filterOptionsProvider.getFilterOptions(filterType);
-            else filterOptions = filterOptionsProvider.getPeriodOptions(selectedFilters.dataType);
+            else filterOptions = filterOptionsProvider.getPeriodOptions((filterList as RequiredFiltersModel).dataType);
             if (filterType===FilterType.includeResolved) return <CheckboxFilter
                 key={0}
-                checked={selectedFilters.includeResolved}
+                checked={(filterList as RequiredFiltersModel).includeResolved}
                 label='Include Resolved'
-                onChange={()=>onFiltersSelect(FilterType.includeResolved, !selectedFilters.includeResolved)}
+                onChange={()=>onFiltersSelect(FilterType.includeResolved, !(filterList as RequiredFiltersModel).includeResolved)}
             />
             return <SelectFilter
                 key={filterType}
                 filterType={filterType}
-                filterValue={selectedFilters[filterType]}
+                filterValue={filterList[filterType]}
                 onFilterSelect={(filterValue:string)=>onFiltersSelect(filterType, filterValue)}
                 filterOptions={filterOptions}
             />
         });
+
 }
 
 
 function searchEnabled(selectedFilters:FiltersModel):boolean{
-    return !!selectedFilters.organisationUnit && !!selectedFilters.dataType && !!selectedFilters.period;
+    return !!selectedFilters.requiredFilters.organisationUnit && !!selectedFilters.requiredFilters.dataType && !!selectedFilters.requiredFilters.period;
 }
 
 export default function Filters({selectedFilters, onFiltersSelect, filterOptionsProvider, onSearchClick, filtersUi}:{
@@ -75,7 +81,8 @@ export default function Filters({selectedFilters, onFiltersSelect, filterOptions
             <FilterList style={styles.filtersIcon}/>
             Filters
         </Typography>
-        {renderFilters(selectedFilters, onFiltersSelect, filterOptionsProvider)}
+        {renderFilters(selectedFilters.requiredFilters, onFiltersSelect, filterOptionsProvider)}
+        {renderFilters(selectedFilters.optionalFilters, onFiltersSelect, filterOptionsProvider)}
         <br/>
         <Button variant="contained" color="secondary" onClick={onSearchClick} disabled={!searchEnabled(selectedFilters)} id='cypress_searchDedupes'>
             Search Dedupes

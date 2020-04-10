@@ -2,18 +2,26 @@ export enum FilterType {
     organisationUnit = 'organisationUnit',
     dataType='dataType',
     period='period',
+    dedupeType='dedupeType',
+    includeResolved='includeResolved',
     agency='agency',
     technicalArea='technicalArea',
-    dedupeType='dedupeType',
-    includeResolved='includeResolved'
 }
 
-export type FiltersModel = {
+export type RequiredFiltersModel = {
     organisationUnit: string,
     dataType: string,
     period: string,
-    agency: string,
-    technicalArea: string,
     dedupeType: string,
     includeResolved: boolean
+}
+
+export type OptionalFiltersModel = {
+    agency: string,
+    technicalArea: string,
+}
+
+export type FiltersModel = {
+    requiredFilters: RequiredFiltersModel
+    optionalFilters: OptionalFiltersModel
 }

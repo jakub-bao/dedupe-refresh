@@ -30,13 +30,17 @@ export default class Main extends React.Component<{}, {
         super(props);
         this.state = {
             selectedFilters: {
-                organisationUnit: null,
-                dataType: null,
-                period: null,
-                dedupeType: 'PURE',
-                includeResolved: false,
-                agency: null,
-                technicalArea: null,
+                requiredFilters: {
+                    dedupeType: 'PURE',
+                    includeResolved: false,
+                    organisationUnit: null,
+                    dataType: null,
+                    period: null,
+                },
+                optionalFilters:{
+                    agency: null,
+                    technicalArea: null,
+                }
             },
             results: {
                 dedupes: null,
@@ -93,9 +97,9 @@ export default class Main extends React.Component<{}, {
 
     preselect = (orgUnitId:string)=>{
         let selectedFilters = {...this.state.selectedFilters};
-        selectedFilters.organisationUnit = orgUnitId;
-        selectedFilters.dataType = 'RESULTS';
-        selectedFilters.period = '2020Q2';
+        selectedFilters.requiredFilters.organisationUnit = orgUnitId;
+        selectedFilters.requiredFilters.dataType = 'RESULTS';
+        selectedFilters.requiredFilters.period = '2020Q2';
         this.setState({selectedFilters});
         setTimeout(this.onSearchClick, 0);
     };
