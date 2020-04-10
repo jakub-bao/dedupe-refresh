@@ -69,6 +69,7 @@ function getResolutionDetails(selectedRows: namedRow[]):DedupeResolutionModel{
     console.debug(selectedRows);
     const isResolved = selectedRows[0].duplicateStatus==='RESOLVED';
     let resolution:DedupeResolutionModel = {
+        resolvedBy: null,
         isResolved: isResolved,
         availableValues: getAvailableValues(selectedRows)
     };

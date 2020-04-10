@@ -35,7 +35,7 @@ export type DedupeResolutionAvailableValues = {
 
 export type DedupeResolutionModel = {
     isResolved: boolean;
-    resolvedBy?: DedupeResolvedByModel;
+    resolvedBy: DedupeResolvedByModel;
     availableValues: DedupeResolutionAvailableValues;
 }
 

@@ -30,11 +30,11 @@ export default class Main extends React.Component<{}, {
         super(props);
         this.state = {
             selectedFilters: {
+                dedupeType: 'PURE',
+                includeResolved: false,
                 organisationUnit: null,
                 dataType: null,
                 period: null,
-                dedupeType: 'PURE',
-                includeResolved: false,
                 agency: null,
                 technicalArea: null,
             },
