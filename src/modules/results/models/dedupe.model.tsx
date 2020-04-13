@@ -46,10 +46,23 @@ export type DuplicateModel = {
     mechanismNumber: number;
 }
 
+export enum DedupeInternalStatusName {
+    alreadyResolved = 'Resolved',
+    readyToEdit = 'Ready to edit',
+    readyToSave = 'Ready to be saved',
+    saved = 'Saved to server',
+    error = 'Error'
+}
+
+export type DedupeInternalStatusModel = {
+    statusName: DedupeInternalStatusName;
+}
+
 export type DedupeModel = {
     meta: DedupeMetaModel;
     data: DedupeDataModel;
     info: DedupeInfoModel;
     resolution: DedupeResolutionModel;
     duplicates: DuplicateModel[];
+    internalStatus: DedupeInternalStatusModel;
 }

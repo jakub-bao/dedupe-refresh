@@ -1,5 +1,7 @@
 import {getData} from "../../shared/services/dataApi.service";
 import {
+    DedupeInternalStatusModel,
+    DedupeInternalStatusName,
     DedupeModel,
     DedupeResolutionAvailableValues,
     DedupeResolutionModel,
@@ -80,6 +82,12 @@ function getResolutionDetails(selectedRows: namedRow[]):DedupeResolutionModel{
     return resolution;
 }
 
+function getInternalStatus(selectedRows: namedRow[]):DedupeInternalStatusModel{
+    const isResolved = selectedRows[0].duplicateStatus==='RESOLVED';
+    if (isResolved) return {statusName: DedupeInternalStatusName.alreadyResolved}
+    else return {statusName: DedupeInternalStatusName.readyToEdit};
+}
+
 function generateDedupe(selectedRows: namedRow[]):DedupeModel{
     let first = selectedRows[0];
     return {
@@ -98,7 +106,8 @@ function generateDedupe(selectedRows: namedRow[]):DedupeModel{
             dataElementName: first.dataElementName
         },
         resolution: getResolutionDetails(selectedRows),
-        duplicates: extractDuplicates(selectedRows)
+        duplicates: extractDuplicates(selectedRows),
+        internalStatus: getInternalStatus(selectedRows)
     };
 }
 

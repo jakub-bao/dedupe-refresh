@@ -1,8 +1,9 @@
 import React from "react";
 import MaterialTable, {MTableBodyRow} from "material-table";
 import {DedupeModel} from "../models/dedupe.model";
-import ResolutionMethodCell from "../../resolutionMethodCell/components/resolutionMethodCell.component";
-import {DuplicatesCell, DuplicatesCellHeader} from "./duplicatesCell.component";
+import {DuplicatesCell, DuplicatesCellHeader} from "./tableCells/duplicatesCell.component";
+import ResolutionMethodCell from "./tableCells/resolutionMethodCell.component";
+import StatusCell from "./tableCells/statusCell.component";
 
 const styles = {
     valueList: {
@@ -33,7 +34,8 @@ const columnSettings = [
     {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding}},
     {title: 'Organisation Unit', field: 'info.orgUnitName', cellStyle: {padding, borderRight}},
     {title: <DuplicatesCellHeader/>, render: (dedupe:DedupeModel)=><DuplicatesCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding, borderRight}},
-    {title: 'Resolution Method', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding, borderRight}}
+    {title: 'Resolution Method', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding, borderRight}},
+    {title: 'Status', field: 'internalStatus.statusName', cellStyle:{backgroundColor: 'red'}}
 ];
 
 const customComponents = {

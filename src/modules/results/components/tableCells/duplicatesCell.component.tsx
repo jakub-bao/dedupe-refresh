@@ -1,7 +1,7 @@
 import React from "react";
-import {DedupeModel, DuplicateModel} from "../models/dedupe.model";
 import {Table, TableBody, TableCell, TableRow} from "@material-ui/core";
 import "./duplicatesCell.component.css";
+import {DedupeModel, DuplicateModel} from "../../models/dedupe.model";
 
 const sizes = ['80px', '140px', '80px', '80px'];
 

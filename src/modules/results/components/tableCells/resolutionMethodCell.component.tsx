@@ -1,11 +1,6 @@
 import React from "react";
-import {
-    DedupeModel,
-    DedupeResolutionModel,
-    DedupeResolvedByModel,
-    ResolutionMethodType
-} from "../../results/models/dedupe.model";
 import {FormControlLabel, Radio, RadioGroup} from "@material-ui/core";
+import {DedupeModel, DedupeResolvedByModel, ResolutionMethodType} from "../../models/dedupe.model";
 
 const styles = {
     root: {
