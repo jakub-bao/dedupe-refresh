@@ -33,6 +33,10 @@ def put(url, body):
     res = requests.put(api + url, auth=credentials, json=body)
     process_status_code(res, 'put')
 
+def patch(url, body):
+    res = requests.patch(api + url, auth=credentials, json=body)
+    process_status_code(res, 'patch')
+
 def process_status_code(response, method):
     if response.status_code in range(200,210):
         print(method + ' to url ' + response.url + ' successful')

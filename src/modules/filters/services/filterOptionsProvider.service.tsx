@@ -1,18 +1,20 @@
-import {FilterType, idName} from "../models/filters.model";
+import {FilterType} from "../models/filters.model";
 import {getData} from "../../shared/services/dataApi.service";
-import {getPeriodsFromDatastore, PeriodList} from "./dataStorePeriods.service";
+import {getPeriodsFromDatastore} from "./dataStorePeriods.service";
+import {DataTypePeriodList, idName} from "../../shared/models/shared.models";
 
 function transformIdNameList(list:{id:string, displayName}[]):idName[]{
     return list.map(item=>{return{id:item.id, name:item.displayName}});
 }
 
 export default class FilterOptionsProvider {
-    private orgUnitList: idName[];
+    private organisationUnitList: idName[];
     private dataTypeList: idName[] = [{id: 'TARGETS', name: 'MER Targets'}, {id: 'RESULTS', name: 'MER Results'}];
-    private periodList: PeriodList;
+    private periodList: DataTypePeriodList;
     private agencyList: idName[];
     private technicalAreaList: idName[];
     private dedupeTypeList: idName[] = [{id: 'PURE', name: 'Pure Dedupes'}, {id:'CROSSWALK', name: 'Crosswalk Dedupes'}];
+    private includeResolvedList: idName[] = [{id: 'true', name: 'Yes'}, {id:'false', name: 'No'}];
 
     init():Promise<any>{
         return Promise.all([
@@ -23,11 +25,26 @@ export default class FilterOptionsProvider {
         ]);
     }
 
-    private getOrganisationUnits():Promise<any>{
+    private getAllOrganisationUnits():Promise<any>{
         return getData('/organisationUnits.json?filter=level:eq:3')
-            .then(res=>transformIdNameList(res.organisationUnits))
-            .then((orgUnits)=>{
-                this.orgUnitList = orgUnits;
+            .then(res=>transformIdNameList(res.organisationUnits));
+    }
+
+    private getUserOrganisationUnits():Promise<any>{
+        return getData('/me?fields=organisationUnits[id,name]')
+            .then(res=>res.organisationUnits);
+    }
+
+    private getOrganisationUnits():Promise<any>{
+        return Promise.all([
+            this.getUserOrganisationUnits(),
+            this.getAllOrganisationUnits(),
+        ]).then(response=>{
+            let userOus = response[0];
+            let allOus = response[1];
+            let isGlobal = userOus.map(ou=>ou.name).includes('Global');
+            if (isGlobal) return this.organisationUnitList = allOus;
+            else return this.organisationUnitList = userOus;
         });
     }
 
@@ -56,19 +73,24 @@ export default class FilterOptionsProvider {
     }
 
     getFilterOptions(type:FilterType){
-        switch(type){
-            case FilterType.organisationUnit: return this.orgUnitList;
-            case FilterType.dataType: return this.dataTypeList;
-            case FilterType.agency: return this.agencyList;
-            case FilterType.technicalArea: return this.technicalAreaList;
-            case FilterType.dedupeType: return this.dedupeTypeList;
-            throw new Error('Unknown filter option')
-        }
+        return this[type+'List'];
     }
 
     getPeriodOptions(dataType:string){
         if (!dataType) return [];
         return this.periodList[dataType.toLocaleLowerCase()];
     }
+
+    getValueNameById(filterType:FilterType, filterValue:string|boolean):string{
+        if (filterType===FilterType.includeResolved) {
+            if (filterValue) return 'Include Resolved';
+            return 'Unresolved Only';
+        }
+        if (filterType===FilterType.period) {
+            return [].concat(this.periodList.results,this.periodList.targets).filter(idName=>idName.id===filterValue)[0].name;
+        }
+        return this[filterType+'List'].filter(idName=>idName.id===filterValue)[0].name;
+    }
 }
+
 

@@ -1,5 +1,5 @@
-import {idName} from "../models/filters.model";
 import {getData} from "../../shared/services/dataApi.service";
+import {DataTypePeriodList, idName} from "../../shared/models/shared.models";
 
 function generatePeriodName(periodKey:string):string{
     let year:number = parseInt(periodKey.substr(0,4));
@@ -29,18 +29,13 @@ function transformPeriod(periodResponse:any):idName[] {
         });
 }
 
-function transformFromDatastore(response:any):PeriodList {
+function transformFromDatastore(response:any):DataTypePeriodList {
     return {
         targets: transformPeriod(response.TARGETS),
         results: transformPeriod(response.RESULTS)
     };
 }
 
-export type PeriodList = {
-    results: idName[];
-    targets: idName[]
-}
-
-export function getPeriodsFromDatastore():Promise<PeriodList>{
+export function getPeriodsFromDatastore():Promise<DataTypePeriodList>{
     return getData('/dataStore/dedupe/periodSettings').then(transformFromDatastore)
 }

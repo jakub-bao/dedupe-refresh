@@ -17,8 +17,12 @@
 
 import "./utils/contains"
 import "./utils/visit"
+import "./utils/inputs"
+import "./utils/getModule"
 import "./login/login"
-import "./pages/list"
+import "./moduleHelpers/filters"
+import "./moduleHelpers/resolution"
+import "./moduleHelpers/results"
 
 // enable stubbing
 Cypress.on('window:before:load', (win) => { win.fetch = null; });
