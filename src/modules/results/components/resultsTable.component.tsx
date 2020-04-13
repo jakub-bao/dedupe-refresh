@@ -2,6 +2,7 @@ import React from "react";
 import MaterialTable, {MTableBodyRow} from "material-table";
 import {DedupeModel} from "../models/dedupe.model";
 import ResolutionMethodCell from "../../resolutionMethodCell/components/resolutionMethodCell.component";
+import {DuplicatesCell, DuplicatesCellHeader} from "./duplicatesCell.component";
 
 const styles = {
     valueList: {
@@ -31,10 +32,7 @@ const columnSettings = [
     {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding}},
     {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding}},
     {title: 'Organisation Unit', field: 'info.orgUnitName', cellStyle: {padding, borderRight}},
-    {title: 'Agency', render: iterateValuesFactory('agencyName'), ...noSort, cellStyle: {padding}},
-    {title: 'Partner', render: iterateValuesFactory('partnerName'), ...noSort, cellStyle: {padding}},
-    {title: 'Mechanism #', render: iterateValuesFactory('mechanismNumber'), ...noSort, cellStyle: {padding}},
-    {title: 'Value', render: iterateValuesFactory('value'), ...noSort, cellStyle: {padding, borderRight}},
+    {title: <DuplicatesCellHeader/>, render: (dedupe:DedupeModel)=><DuplicatesCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding, borderRight}},
     {title: 'Resolution Method', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding, borderRight}}
 ];
 

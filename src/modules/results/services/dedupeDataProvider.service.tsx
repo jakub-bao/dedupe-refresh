@@ -23,7 +23,9 @@ function generateDedupeUrl(selectedFilters:FiltersModel):string{
 }
 
 function extractDuplicates(rows:namedRow[]):DuplicateModel[]{
-    return rows.map(namedRow=>{
+    return rows
+        .filter((namedRow:namedRow)=>!isDedupeFilter(namedRow))
+        .map(namedRow=>{
         return {
             value: namedRow.value,
             agencyName: namedRow.agencyName,
