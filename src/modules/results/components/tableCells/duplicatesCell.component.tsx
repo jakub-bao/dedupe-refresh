@@ -42,7 +42,7 @@ export function DuplicatesCell({dedupe}:{dedupe:DedupeModel}) {
     </Table>
 }
 
-export function DuplicatesCellHeader({}:{}){
+export function DuplicatesCellHeader(){
     return <div style={styles.duplicateCellHeader}>
         <div style={styles.duplicateCellHeaderItem[0]}>Agency</div>
         <div style={styles.duplicateCellHeaderItem[1]}>Partner</div>

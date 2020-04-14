@@ -1,4 +1,3 @@
-import React from "react";
 import {DedupeInternalStatusName, DedupeModel} from "../models/dedupe.model";
 import {CSSProperties} from "react";
 

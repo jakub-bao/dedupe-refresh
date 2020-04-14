@@ -5,13 +5,6 @@ import {DuplicatesCell, DuplicatesCellHeader} from "./tableCells/duplicatesCell.
 import ResolutionMethodCell from "./tableCells/resolutionMethodCell.component";
 import getStatusCellBackground from "../services/getStatusCellBackground.service";
 
-const styles = {
-    valueList: {
-        paddingInlineStart: 15,
-        margin: 0
-    }
-};
-
 const noSort = {sorting: false};
 const padding = '5px 5px 5px 5px';
 
@@ -42,14 +35,6 @@ const customComponents = {
     Container: props=><div {...props}></div>,
     Row: props=><MTableBodyRow {...props} className='cypress_resultsRow'/>
 };
-
-function iterateValuesFactory(property:string){
-    return function(dedupe:DedupeModel){
-        return <ul style={styles.valueList}>
-            {dedupe.duplicates.map((duplicate,i)=><li key={i}>{duplicate[property]}</li>)}
-        </ul>
-    }
-}
 
 export default function ResultsTable({filteredDedupes}:{filteredDedupes: DedupeModel[]}) {
     return <MaterialTable
