@@ -27,6 +27,16 @@ const maxResolvedDedupeInfo = [
     'Resolved'
 ];
 
+const customResolvedDedupeInfo = [
+    '40010',
+    '40020',
+    'CATHOLIC CARITAS FOUNDATION O F NIGERIA',
+    'Sum (80030)',
+    '16848',
+    'ad Fufore',
+    'TG, Recent RTRI, Positive'
+];
+
 describe('Nigeria Resolved Dedupes', ()=> {
     before(() => {
         cy.loginAs('de-interAgency-nigeria');
@@ -48,12 +58,17 @@ describe('Nigeria Resolved Dedupes', ()=> {
     });
 
     it('Should be able to see SUM resolved dedupe', ()=>{
-        cy.getResultByOrder(1).containsAll(sumResolvedDedupeInfo);
-        cy.getResultByOrder(1).checkResolved('sum');
+        cy.getResultByOrder(2).containsAll(sumResolvedDedupeInfo);
+        cy.getResultByOrder(2).checkResolved('sum');
     });
 
     it('Should be able to see MAX resolved dedupe', ()=>{
         cy.getResultByOrder(0).containsAll(maxResolvedDedupeInfo);
         cy.getResultByOrder(0).checkResolved('maximum');
+    });
+
+    it('Should be able to see CUSTOM VALUE resolved dedupe', ()=>{
+        cy.getResultByOrder(1).containsAll(customResolvedDedupeInfo);
+        cy.getResultByOrder(1).checkResolved('custom');
     });
 });
