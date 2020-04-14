@@ -2,8 +2,8 @@ import React from "react";
 import {Button, Chip, Divider, Typography} from "@material-ui/core";
 import {FiltersUiModel} from "../../filters/components/filtersUi.model";
 import {FiltersModel, FilterType} from "../../filters/models/filters.model";
-import {Filter} from "@material-ui/icons";
 import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.service";
+import {FilterList} from "@material-ui/icons";
 
 const styles = {
     chip: {marginLeft: 5}
@@ -19,6 +19,11 @@ function renderFilterList(selectedFilters:FiltersModel, filterOptionsProvider:Fi
     });
 }
 
+function getButtonStyle(filtersUi:FiltersUiModel):object{
+    if (!filtersUi.filtersOpen) return {variant:'contained', color:'primary'};
+    else return {variant: 'outlined'};
+}
+
 export default function Header({selectedFilters, filterOptionsProvider, filtersUi}:{
     selectedFilters: FiltersModel,
     filterOptionsProvider: FilterOptionsProvider
@@ -26,8 +31,8 @@ export default function Header({selectedFilters, filterOptionsProvider, filtersU
 }) {
     return <div id='cypress_header'>
         <Typography variant='h4'>Data Deduplication</Typography>
-        <Button onClick={filtersUi.collapseFilters} variant='outlined' size='small' id='cypress_openFilters'>
-            <Filter/>
+        <Button onClick={filtersUi.collapseFilters} {...getButtonStyle(filtersUi)} size='small' id='cypress_openFilters'>
+            <FilterList/>
             Filters
         </Button>
         <span id='cypress_filterBreadCrumb'>

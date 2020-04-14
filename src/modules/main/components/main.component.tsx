@@ -64,7 +64,7 @@ export default class Main extends React.Component<{}, {
         this.setState({loadingDedupes: true});
         let selectedFilters = {...this.state.selectedFilters};
         fetchDedupes(this.state.selectedFilters).then(dedupes=>{
-            this.setState({results: {dedupes, selectedFilters}, loadingDedupes: false, error: false});
+            this.setState({results: {dedupes, selectedFilters}, loadingDedupes: false, error: false, ui: {filtersOpen: false}});
         }).catch(()=>{
             this.setState({loadingDedupes:false, results: {dedupes: null, selectedFilters}, error: true});
         });

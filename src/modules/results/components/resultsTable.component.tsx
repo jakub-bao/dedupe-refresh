@@ -3,7 +3,7 @@ import MaterialTable, {MTableBodyRow} from "material-table";
 import {DedupeModel} from "../models/dedupe.model";
 import {DuplicatesCell, DuplicatesCellHeader} from "./tableCells/duplicatesCell.component";
 import ResolutionMethodCell from "./tableCells/resolutionMethodCell.component";
-import StatusCell from "./tableCells/statusCell.component";
+import getStatusCellBackground from "../services/getStatusCellBackground.service";
 
 const styles = {
     valueList: {
@@ -35,7 +35,7 @@ const columnSettings = [
     {title: 'Organisation Unit', field: 'info.orgUnitName', cellStyle: {padding, borderRight}},
     {title: <DuplicatesCellHeader/>, render: (dedupe:DedupeModel)=><DuplicatesCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding, borderRight}},
     {title: 'Resolution Method', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding, borderRight}},
-    {title: 'Status', field: 'internalStatus.statusName', cellStyle:{backgroundColor: 'red'}}
+    {title: 'Status', field: 'internalStatus.statusName', cellStyle: getStatusCellBackground}
 ];
 
 const customComponents = {

@@ -50,8 +50,6 @@ export enum DedupeInternalStatusName {
     alreadyResolved = 'Resolved',
     readyToEdit = 'Ready to edit',
     readyToSave = 'Ready to be saved',
-    saved = 'Saved to server',
-    error = 'Error'
 }
 
 export type DedupeInternalStatusModel = {
