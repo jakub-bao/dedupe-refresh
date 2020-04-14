@@ -2,6 +2,7 @@ import React from "react";
 import {FormControlLabel, Radio, RadioGroup} from "@material-ui/core";
 import {DedupeModel, DedupeResolvedByModel, ResolutionMethodType} from "../../models/dedupe.model";
 import "./resolutionMethodCell.component.css";
+import CustomValueInput from "./customValueInput.component";
 
 const classes = {label: 'dedupe_resolutionMethodCell_label'}
 
@@ -36,10 +37,11 @@ export default class ResolutionMethodCell extends React.Component<{dedupe:Dedupe
     render() {
         const resolutionSum = this.props.dedupe.resolution.availableValues.sum;
         const resolutionMax = this.props.dedupe.resolution.availableValues.max;
+        const customValue = this.props.dedupe.resolution.resolvedBy.resolutionValue;
         return <RadioGroup value={this.state.resolvedBy?this.state.resolvedBy.resolutionMethod:''} onChange={this.onResolutionMethodChange} className='cypress_resolutionMethodCell'>
             <FormControlLabel classes={classes} value="maximum" control={<Radio size='small'/>} label={`Maximum (${resolutionMax})`} className='cypress__maximum'/>
             <FormControlLabel classes={classes} value="sum" control={<Radio size='small'/>} label={`Sum (${resolutionSum})`} className='cypress__sum'/>
-            <FormControlLabel classes={classes} value="custom" control={<Radio size='small'/>} label={`Custom Value`} className='cypress__custom'/>
+            <FormControlLabel classes={classes} value="custom" control={<Radio size='small'/>} label={<CustomValueInput/>} className='cypress__custom'/>
         </RadioGroup>
     }
 }

@@ -34,7 +34,9 @@ const customResolvedDedupeInfo = [
     'Sum (80030)',
     '16848',
     'ad Fufore',
-    'TG, Recent RTRI, Positive'
+    'TG, Recent RTRI, Positive',
+    'Resolved',
+    '40100'
 ];
 
 describe('Nigeria Resolved Dedupes', ()=> {

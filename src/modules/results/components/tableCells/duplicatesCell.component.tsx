@@ -26,7 +26,7 @@ function DuplicateTableCell(props:any){
 }
 
 function renderDuplicates(duplicates:DuplicateModel[]){
-    return duplicates.map((duplicate:DuplicateModel)=><TableRow>
+    return duplicates.map((duplicate:DuplicateModel, i:number)=><TableRow key={i}>
         <DuplicateTableCell style={styles.cells[0]}>{duplicate.agencyName}</DuplicateTableCell>
         <DuplicateTableCell style={styles.cells[1]}>{duplicate.partnerName}</DuplicateTableCell>
         <DuplicateTableCell style={styles.cells[2]}>{duplicate.mechanismNumber}</DuplicateTableCell>
