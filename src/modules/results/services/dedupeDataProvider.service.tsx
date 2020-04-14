@@ -85,7 +85,7 @@ function getResolutionDetails(selectedRows: namedRow[]):DedupeResolutionModel{
 function getInternalStatus(selectedRows: namedRow[]):DedupeInternalStatusModel{
     const isResolved = selectedRows[0].duplicateStatus==='RESOLVED';
     if (isResolved) return {statusName: DedupeInternalStatusName.alreadyResolved}
-    else return {statusName: DedupeInternalStatusName.readyToEdit};
+    else return {statusName: DedupeInternalStatusName.readyToResolve};
 }
 
 function generateDedupe(selectedRows: namedRow[]):DedupeModel{

@@ -48,7 +48,7 @@ export type DuplicateModel = {
 
 export enum DedupeInternalStatusName {
     alreadyResolved = 'Resolved',
-    readyToEdit = 'Ready to edit',
+    readyToResolve = 'Ready to be resolved',
     readyToSave = 'Ready to be saved',
 }
 

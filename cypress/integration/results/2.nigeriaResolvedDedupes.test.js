@@ -10,7 +10,8 @@ const sumResolvedDedupeInfo = [
     '20020',
     'USAID',
     'Maximum (20020)',
-    'Sum (40030)'
+    'Sum (40030)',
+    'Resolved'
 ];
 
 const maxResolvedDedupeInfo = [
@@ -22,7 +23,8 @@ const maxResolvedDedupeInfo = [
     '30020',
     'HHS/CDC',
     'Maximum (30020)',
-    'Sum (60030)'
+    'Sum (60030)',
+    'Resolved'
 ];
 
 describe('Nigeria Resolved Dedupes', ()=> {
@@ -40,9 +42,12 @@ describe('Nigeria Resolved Dedupes', ()=> {
         cy.results().contains('No duplicates found matching the selected criteria');
     });
 
-    it('Should be able to see SUM resolved dedupe', ()=>{
+    it('Should see resolved dedupes', ()=> {
         cy.get('#cypress_IncludeResolved').click();
         cy.searchDedupes();
+    });
+
+    it('Should be able to see SUM resolved dedupe', ()=>{
         cy.getResultByOrder(1).containsAll(sumResolvedDedupeInfo);
         cy.getResultByOrder(1).checkResolved('sum');
     });
