@@ -9,5 +9,5 @@ export default function getStatusCellBackground(allDedupes: DedupeModel[], dedup
         case DedupeInternalStatusName.alreadyResolved: color = '#A2FAA3'; break;
         case DedupeInternalStatusName.readyToSave: color = '#FFAD05'; break;
     }
-    return {backgroundColor: color};
+    return {backgroundColor: color, textAlign: 'center'};
 }

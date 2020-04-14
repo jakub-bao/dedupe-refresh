@@ -6,7 +6,10 @@ import FilterOptionsProvider from "../../filters/services/filterOptionsProvider.
 import {FilterList} from "@material-ui/icons";
 
 const styles = {
-    chip: {marginLeft: 5}
+    chip: {marginLeft: 5},
+    filtersCollapseButton: {
+        transition: 'all 300ms ease 300ms'
+    }
 };
 
 function renderFilterList(selectedFilters:FiltersModel, filterOptionsProvider:FilterOptionsProvider) {
@@ -31,7 +34,7 @@ export default function Header({selectedFilters, filterOptionsProvider, filtersU
 }) {
     return <div id='cypress_header'>
         <Typography variant='h4'>Data Deduplication</Typography>
-        <Button onClick={filtersUi.collapseFilters} {...getButtonStyle(filtersUi)} size='small' id='cypress_openFilters'>
+        <Button onClick={filtersUi.collapseFilters} {...getButtonStyle(filtersUi)} size='small' id='cypress_openFilters' style={styles.filtersCollapseButton}>
             <FilterList/>
             Filters
         </Button>
