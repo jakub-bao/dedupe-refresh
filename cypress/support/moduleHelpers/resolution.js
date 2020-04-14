@@ -9,3 +9,10 @@ Cypress.Commands.add('checkResolved', {prevSubject: true},(subject, method)=>{
         cy.get(subject).find('.cypress_resolutionMethodCell').find(`.cypress__${method}`).checked(true);
     }
 });
+
+Cypress.Commands.add('resolveAs',{prevSubject: true}, (subject, type, value)=>{
+    cy.get(subject)
+        .find('.cypress_resolutionMethodCell')
+        .find(`.cypress__${type}`)
+        .click();
+});

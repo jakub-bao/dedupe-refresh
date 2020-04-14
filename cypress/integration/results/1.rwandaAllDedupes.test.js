@@ -28,4 +28,10 @@ describe('Rwanda All Dedupes', ()=> {
         cy.getResultByOrder(0).checkResolved('none');
         cy.getResultByOrder(1).checkResolved('none');
     });
+
+    it('Should be able to resolve a dedupe', ()=>{
+        cy.getResultByOrder(0).resolveAs('maximum');
+        cy.getResultByOrder(0).checkResolved('maximum');
+        cy.getResultByOrder(0).contains('Ready to be saved');
+    });
 });

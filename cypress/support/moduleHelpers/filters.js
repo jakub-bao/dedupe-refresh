@@ -3,6 +3,6 @@ Cypress.Commands.add('setFilter', (filterType, filterValue)=>{
 });
 
 Cypress.Commands.add('searchDedupes', ()=>{
-    cy.loadingDone();
     cy.get(`#cypress_searchDedupes`).click();
+    cy.loadingDone();
 });

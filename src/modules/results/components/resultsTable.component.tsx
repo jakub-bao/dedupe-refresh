@@ -25,9 +25,9 @@ const borderRight = '1px solid #00000021';
 const columnSettings = [
     {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding}},
     {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding}},
-    {title: 'Organisation Unit', field: 'info.orgUnitName', cellStyle: {padding, borderRight}},
+    {title: 'Org Unit', field: 'info.orgUnitName', cellStyle: {padding, borderRight}},
     {title: <DuplicatesCellHeader/>, render: (dedupe:DedupeModel)=><DuplicatesCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding, borderRight}},
-    {title: 'Resolution Method', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding, borderRight}},
+    {title: 'Resolution', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding, borderRight}},
     {title: 'Status', field: 'internalStatus.statusName', cellStyle: getStatusCellBackground}
 ];
 
