@@ -36,7 +36,6 @@ const customResolvedDedupeInfo = [
     'ad Fufore',
     'TG, Recent RTRI, Positive',
     'Resolved',
-    '40100'
 ];
 
 describe('Nigeria Resolved Dedupes', ()=> {
@@ -72,5 +71,6 @@ describe('Nigeria Resolved Dedupes', ()=> {
     it('Should be able to see CUSTOM VALUE resolved dedupe', ()=>{
         cy.getResultByOrder(1).containsAll(customResolvedDedupeInfo);
         cy.getResultByOrder(1).checkResolved('custom');
+        cy.getResultByOrder(1).checkCustomValue('40100');
     });
 });
