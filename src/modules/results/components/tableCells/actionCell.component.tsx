@@ -13,7 +13,7 @@ function showRightButton(dedupe:DedupeModel, resolveDedupe: (DedupeModel)=>void)
         case DedupeInternalStatusName.readyToResolve: infoText='Please select resolution method'; break;
         case DedupeInternalStatusName.error: return infoText='Please resolve issues'; break;
     }
-    if (buttonText) return <Button variant="outlined" color="secondary" onClick={method}>
+    if (buttonText) return <Button variant="outlined" color="secondary" onClick={method} className='cypress_actionCell_button'>
         {buttonText}
     </Button>
     if (infoText) return <Typography>{infoText}</Typography>;
@@ -21,5 +21,5 @@ function showRightButton(dedupe:DedupeModel, resolveDedupe: (DedupeModel)=>void)
 }
 
 export default function ActionCell({dedupe, resolveDedupe}:{dedupe:DedupeModel, resolveDedupe: (DedupeModel)=>void}) {
-    return <React.Fragment>{showRightButton(dedupe, resolveDedupe)}</React.Fragment>;
+    return <div className='cypress_actionCell'>{showRightButton(dedupe, resolveDedupe)}</div>;
 }

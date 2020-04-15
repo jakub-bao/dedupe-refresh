@@ -35,8 +35,12 @@ describe('Rwanda All Dedupes', ()=> {
     });
 
     it('Should be able to resolve a dedupe', ()=>{
+        cy.deleteDataValue('de-interAgency-rwanda', 'de=qhGxKnmrZBd&co=xYyVHiXrvSi&ds=qzVASYuaIey&ou=TAPALAZae2l&pe=2020Q2&cc=wUpfppgjEza&cp=wXNP2RRZqbj');
+
         cy.getResultByOrder(0).resolveAs('maximum');
         cy.getResultByOrder(0).checkResolved('maximum');
         cy.getResultByOrder(0).containsAll(['Ready to be saved', 'Save']);
+        cy.getResultByOrder(0).save();
+
     });
 });

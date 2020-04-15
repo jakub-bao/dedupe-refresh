@@ -25,3 +25,7 @@ Cypress.Commands.add('checkCustomValue',{prevSubject: true}, (subject, value)=>{
         .find('input')
         .should('have.value',value);
 });
+
+Cypress.Commands.add('save', {prevSubject: true}, (subject)=>{
+    cy.get(subject).find('.cypress_actionCell').find('.cypress_actionCell_button').click();
+});

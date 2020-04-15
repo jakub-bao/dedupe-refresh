@@ -9,7 +9,6 @@ def loadDataSet(fileName):
     for query in queries:
         if query[0]=='#':
             break
-        api.formPost('dataValues', query.rstrip())
+        api.delete('dataValues.json/'+query.rstrip())
 
-loadDataSet('./data/rwanda.txt')
-loadDataSet('./data/nigeria.txt')
+loadDataSet('./data/deleteResolutions.txt')

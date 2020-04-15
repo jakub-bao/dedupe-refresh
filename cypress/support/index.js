@@ -23,6 +23,7 @@ import "./login/login"
 import "./moduleHelpers/filters"
 import "./moduleHelpers/resolution"
 import "./moduleHelpers/results"
+import "./api/dedupe"
 
 // enable stubbing
 Cypress.on('window:before:load', (win) => { win.fetch = null; });
