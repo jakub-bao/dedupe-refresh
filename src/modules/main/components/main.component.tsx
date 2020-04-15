@@ -10,6 +10,7 @@ import {FiltersUiModel} from "../../filters/components/filtersUi.model";
 import Header from "../../header/components/header.component";
 import ContentWrapper from "./contentWrapper.component";
 import NetworkError from "../../shared/components/networkError.component";
+import { resolveDedupe } from "../services/resolveDedupe.service";
 
 export default class Main extends React.Component<{}, {
     selectedFilters:FiltersModel,
@@ -81,7 +82,11 @@ export default class Main extends React.Component<{}, {
     renderResults(){
         if (this.state.loadingDedupes) return <Loading message={'Searching duplicates...'}/>;
         if (this.state.error) return <NetworkError/>;
-        return <Results filteredDedupes={this.state.results.dedupes} onUpdateDedupe={this.onUpdateDedupe}/>;
+        return <Results
+            filteredDedupes={this.state.results.dedupes}
+            onUpdateDedupe={this.onUpdateDedupe}
+            resolveDedupe={this.resolveDedupe}
+        />;
     }
 
     renderPreselect(){
@@ -116,6 +121,10 @@ export default class Main extends React.Component<{}, {
         let results = this.state.results;
         results.dedupes = dedupes;
         this.setState({results});
+    };
+
+    resolveDedupe = (dedupe:DedupeModel)=>{
+        resolveDedupe(dedupe).then(this.onUpdateDedupe);
     };
 
     render() {
