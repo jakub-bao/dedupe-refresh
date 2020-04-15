@@ -16,3 +16,6 @@ section DataSets \> Opening dataset future periods
 
 section DataValues \> Submitting form data
 (cd dataValues && ./dataValues.py)
+
+section CORS \> Whitelist localhost
+(cd cors && ./cors.py)

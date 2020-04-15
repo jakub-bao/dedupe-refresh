@@ -58,6 +58,7 @@ export type DedupeInternalStatusModel = {
 }
 
 export type DedupeModel = {
+    internalId:number;
     meta: DedupeMetaModel;
     data: DedupeDataModel;
     info: DedupeInfoModel;

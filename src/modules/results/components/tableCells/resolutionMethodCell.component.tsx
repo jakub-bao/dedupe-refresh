@@ -12,7 +12,7 @@ function countAdjustmentValue(dedupe:DedupeModel, method: ResolutionMethodType):
     if (method===ResolutionMethodType.custom) return null;
 }
 
-function resolutionMethodChangeFactory(dedupe:DedupeModel){
+function resolutionMethodChangeFactory(dedupe:DedupeModel, onUpdateDedupe: (DedupeModel)=>void){
     return (event)=>{
         let newMethod: ResolutionMethodType = event.target.value;
         dedupe.resolution.resolvedBy = {
@@ -21,26 +21,31 @@ function resolutionMethodChangeFactory(dedupe:DedupeModel){
             deduplicationAdjustmentValue: countAdjustmentValue(dedupe, newMethod)
         };
         dedupe.internalStatus.statusName = DedupeInternalStatusName.readyToSave;
+        onUpdateDedupe(dedupe);
     }
 }
 
-function customValueChangeFactory(dedupe:DedupeModel){
+function customValueChangeFactory(dedupe:DedupeModel, onUpdateDedupe: (DedupeModel)=>void){
     return (newValue:number)=>{
         dedupe.resolution.resolvedBy.resolutionValue = newValue;
         dedupe.resolution.resolvedBy.deduplicationAdjustmentValue = newValue - dedupe.resolution.availableValues.sum;
         dedupe.internalStatus.statusName = DedupeInternalStatusName.readyToSave;
+        onUpdateDedupe(dedupe);
     }
 }
 
-export default function ResolutionMethodCell({dedupe}:{dedupe:DedupeModel}) {
+export default function ResolutionMethodCell({dedupe, onUpdateDedupe}:{
+    dedupe:DedupeModel,
+    onUpdateDedupe: (DedupeModel)=>void
+}) {
     const resolutionSum = dedupe.resolution.availableValues.sum;
     const resolutionMax = dedupe.resolution.availableValues.max;
     const resolvedBy = dedupe.resolution.resolvedBy;
     let customValue;
     if (resolvedBy && resolvedBy.resolutionMethod===ResolutionMethodType.custom) customValue = resolvedBy.resolutionValue;
-    return <RadioGroup value={resolvedBy?resolvedBy.resolutionMethod:''} onChange={resolutionMethodChangeFactory(dedupe)} className='cypress_resolutionMethodCell'>
+    return <RadioGroup value={resolvedBy?resolvedBy.resolutionMethod:''} onChange={resolutionMethodChangeFactory(dedupe,onUpdateDedupe)} className='cypress_resolutionMethodCell'>
         <FormControlLabel classes={classes} value="maximum" control={<Radio size='small'/>} label={`Maximum (${resolutionMax})`} className='cypress_resolutionMethod_maximum'/>
         <FormControlLabel classes={classes} value="sum" control={<Radio size='small'/>} label={`Sum (${resolutionSum})`} className='cypress_resolutionMethod_sum'/>
-        <FormControlLabel classes={classes} value="custom" control={<Radio size='small'/>} label={<CustomValueInput value={customValue} onChange={customValueChangeFactory(dedupe)}/>} className='cypress_resolutionMethod_custom'/>
+        <FormControlLabel classes={classes} value="custom" control={<Radio size='small'/>} label={<CustomValueInput value={customValue} onChange={customValueChangeFactory(dedupe, onUpdateDedupe)}/>} className='cypress_resolutionMethod_custom'/>
     </RadioGroup>
 }

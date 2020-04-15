@@ -81,7 +81,7 @@ export default class Main extends React.Component<{}, {
     renderResults(){
         if (this.state.loadingDedupes) return <Loading message={'Searching duplicates...'}/>;
         if (this.state.error) return <NetworkError/>;
-        return <Results filteredDedupes={this.state.results.dedupes} />;
+        return <Results filteredDedupes={this.state.results.dedupes} onUpdateDedupe={this.onUpdateDedupe}/>;
     }
 
     renderPreselect(){
@@ -106,6 +106,16 @@ export default class Main extends React.Component<{}, {
         let ui = {...this.state.ui};
         ui.filtersOpen = open;
         this.setState({ui})
+    };
+
+    onUpdateDedupe = (dedupe:DedupeModel)=>{
+        let dedupes = this.state.results.dedupes;
+        for (var i=0; i<dedupes.length;i++){
+            if (dedupes[i].internalId === dedupe.internalId) dedupes[i]=dedupe;
+        }
+        let results = this.state.results;
+        results.dedupes = dedupes;
+        this.setState({results});
     };
 
     render() {

@@ -88,9 +88,14 @@ function getInternalStatus(selectedRows: namedRow[]):DedupeInternalStatusModel{
     else return {statusName: DedupeInternalStatusName.readyToResolve};
 }
 
+function generateId():number{
+    return Math.floor(Math.random()*10e5);
+}
+
 function generateDedupe(selectedRows: namedRow[]):DedupeModel{
     let first = selectedRows[0];
     return {
+        internalId: generateId(),
         meta: {
             orgUnitId: first.orgUnitId,
             periodId: 'blank',

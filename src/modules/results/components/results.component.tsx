@@ -9,10 +9,11 @@ const styles = {
     }
 };
 
-export default function Results({filteredDedupes}:{
+export default function Results({filteredDedupes, onUpdateDedupe}:{
     filteredDedupes: DedupeModel[],
+    onUpdateDedupe: (DedupeModel)=>void
 }) {
     if (!filteredDedupes) return <Typography style={styles.info}>Start by selecting filters on the left...</Typography>;
     if (filteredDedupes.length===0) return <Typography style={styles.info}>No duplicates found matching the selected criteria</Typography>
-    return <ResultsTable filteredDedupes={filteredDedupes}/>;
+    return <ResultsTable filteredDedupes={filteredDedupes} onUpdateDedupe={onUpdateDedupe}/>;
 }

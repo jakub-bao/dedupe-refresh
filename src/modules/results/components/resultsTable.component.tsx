@@ -22,25 +22,30 @@ const tableOptions = {
 const borderRight = '1px solid #00000021';
 
 
-const columnSettings = [
-    {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding}},
-    {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding}},
-    {title: 'Org Unit', field: 'info.orgUnitName', cellStyle: {padding, borderRight}},
-    {title: <DuplicatesCellHeader/>, render: (dedupe:DedupeModel)=><DuplicatesCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding, borderRight}},
-    {title: 'Resolution', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding, borderRight}},
-    {title: 'Status', field: 'internalStatus.statusName', cellStyle: getStatusCellBackground}
-];
+function columnSettingsFactory(onUpdateDedupe:(DedupeModel)=>void){
+    return [
+        {title: 'Data Element', field: 'info.dataElementName', cellStyle: {padding}},
+        {title: 'Disaggregation', field: 'data.disAggregation', cellStyle: {padding}},
+        {title: 'Org Unit', field: 'info.orgUnitName', cellStyle: {padding, borderRight}},
+        {title: <DuplicatesCellHeader/>, render: (dedupe:DedupeModel)=><DuplicatesCell dedupe={dedupe}/>, ...noSort, cellStyle: {padding, borderRight}},
+        {title: 'Resolution', render: (dedupe:DedupeModel)=><ResolutionMethodCell dedupe={dedupe} onUpdateDedupe={onUpdateDedupe}/>, ...noSort, cellStyle: {padding, borderRight}},
+        {title: 'Status', field: 'internalStatus.statusName', cellStyle: getStatusCellBackground}
+    ];
+}
 
 const customComponents = {
     Container: props=><div {...props}></div>,
     Row: props=><MTableBodyRow {...props} className='cypress_resultsRow'/>
 };
 
-export default function ResultsTable({filteredDedupes}:{filteredDedupes: DedupeModel[]}) {
+export default function ResultsTable({filteredDedupes, onUpdateDedupe}:{
+    filteredDedupes: DedupeModel[],
+    onUpdateDedupe: (DedupeModel)=>void
+}) {
     return <MaterialTable
         title="Data Deduplication"
         options={tableOptions}
-        columns={columnSettings}
+        columns={columnSettingsFactory(onUpdateDedupe)}
         data={filteredDedupes}
         components={customComponents}
     />;
